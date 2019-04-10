@@ -80,7 +80,11 @@ public class PizzaVO {
 	}
 
 	public void setPrice(float price) {
-		this.price = price;
+		if(price > 0.0f) {
+			this.price = price;
+		} else {
+			this.price = 0.0f;
+		}
 	}
 
 	public String getName() {

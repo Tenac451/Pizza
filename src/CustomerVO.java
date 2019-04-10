@@ -95,7 +95,10 @@ public class CustomerVO {
 	}
 	
 	public short calculateAge() {
-		short age = 0;
+		short age = -1;
+		if(this.dateOfBirth == null ) {
+			return (short) -1;
+		}
 		int diff = Period.between(this.getDateOfBirth(), LocalDate.now()).getYears();
 		if(diff < 32767) {
 			age = (short) diff;
@@ -134,15 +137,19 @@ public class CustomerVO {
 		if(dateOfBirth != null) {
 			return dateOfBirth;
 		} else {
-			return LocalDate.now();
+			return null;
 		}
 
 	}
 	
 	public void setDateOfBirth(LocalDate dateOfBirth) {
-		int diff = Period.between(dateOfBirth, LocalDate.now()).getYears();
-		if(diff > 17) {
-			this.dateOfBirth = dateOfBirth;
+		if(dateOfBirth != null) {
+			int diff = Period.between(dateOfBirth, LocalDate.now()).getYears();
+			if(diff > 17) {
+				this.dateOfBirth = dateOfBirth;
+			} else {
+				this.dateOfBirth = null;
+			}
 		} else {
 			this.dateOfBirth = null;
 		}
