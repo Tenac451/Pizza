@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 /**
  * 
- * @author Jan Münchberger
+ * @author Jan MÃ¼nchberger
  *
  */
 
@@ -64,7 +64,7 @@ public class PizzaVO {
 	}
 	
 	public String toString() {
-		return this.getName();
+		return "PizzaVO [name=" + this.getName() +  ", price=" + this.getPrice() + ", ingredients=" + Arrays.toString(this.getIngredients()) + "]" ;
 	}
 
 	public String[] getIngredients() {

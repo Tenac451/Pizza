@@ -1,36 +1,33 @@
 import java.awt.Color;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 
 public class TestDriver {
 
 	public static void main(String[] args) {
+		CustomerVO jule = new CustomerVO("Jule", "Hansen", CustomerVO.W, LocalDate.of(1990, 5, 24));
 		
 		
-		
-		
+		OrderVO order3 = new OrderVO(LocalDateTime.now(), jule);
 		OrderVO order = new OrderVO();
 		OrderVO order2 = new OrderVO();
 		
-		System.out.println(order);
+		
+		OrderVO order4 = new OrderVO(LocalDateTime.now(), jule);
+		
+		//System.out.println(order);
 		
 		order.setTimestampStartedOrder(LocalDateTime.of(2015, Month.JULY, 29, 19, 30, 40));
 		order.setTimestampDeliverdOrder(LocalDateTime.of(2015, Month.JULY, 29, 19, 30, 40));
-		
-		System.out.println(order);
-		System.out.println(order2);
-		
-		LocalDateTime today = LocalDateTime.now();
-		System.out.println(today);
-		
-		
-		
-		
-		
-		
-		
-		
-		
+//		
+//		System.out.println(order);
+//		System.out.println(order2);
+//		System.out.println(order3);
+//		System.out.println(order4);
+//		
+		//LocalDateTime today = LocalDateTime.now();
+		//System.out.println(today);
 		
 		
 		
@@ -40,12 +37,25 @@ public class TestDriver {
 //		System.out.println(bocuse.getLastName());
 //		PizzaVO salami1 = new PizzaVO();
 //	
-//		String[] zutaten2 =  {"Salami" ,"Käse"};
-//		PizzaVO salami2= new PizzaVO("Salami", zutaten2, 2.50f);
+		String[] zutaten2 =  {"Salami" ,"Gauda"};
+		PizzaVO salami2= new PizzaVO("Salami", zutaten2, 2.50f);
 //		
-//		String[] zutaten3 =  {"Salami Tomate" ,"Käse", "Tomaten"};
-//		PizzaVO salami3 = new PizzaVO("Salami", zutaten3, 2.50f);
-//		
+		String[] zutaten3 =  {"Salami" ,"KÃ¤se", "Tomaten"};
+		PizzaVO salami3 = new PizzaVO("Salami", zutaten3, 2.50f);
+		
+		order4.addDish(salami3);
+//		order4.addDish(salami2);
+//		order4.addDish(salami3);
+		
+		System.out.println(order4);
+		
+		//order4.deleteDish();
+		System.out.println(order4);
+		
+		System.out.println(order4.getDish(1));
+		
+		System.out.println(order4.getNumerOfDishes());
+		
 //		PizzaVO salami4 = (PizzaVO) salami3.clone();
 //		
 //		LocalDate today = LocalDate.now();
