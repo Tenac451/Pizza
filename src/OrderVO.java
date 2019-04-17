@@ -1,5 +1,6 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 public class OrderVO {
 	
@@ -82,11 +83,15 @@ public class OrderVO {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((customer == null) ? 0 : customer.hashCode());
+		result = prime * result + index;
 		result = prime * result + orderNo;
+		result = prime * result + Arrays.hashCode(shoppingBasket);
 		result = prime * result + ((timestampDeliverdOrder == null) ? 0 : timestampDeliverdOrder.hashCode());
 		result = prime * result + ((timestampStartedOrder == null) ? 0 : timestampStartedOrder.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -96,7 +101,16 @@ public class OrderVO {
 		if (getClass() != obj.getClass())
 			return false;
 		OrderVO other = (OrderVO) obj;
+		if (customer == null) {
+			if (other.customer != null)
+				return false;
+		} else if (!customer.equals(other.customer))
+			return false;
+		if (index != other.index)
+			return false;
 		if (orderNo != other.orderNo)
+			return false;
+		if (!Arrays.equals(shoppingBasket, other.shoppingBasket))
 			return false;
 		if (timestampDeliverdOrder == null) {
 			if (other.timestampDeliverdOrder != null)
@@ -110,7 +124,7 @@ public class OrderVO {
 			return false;
 		return true;
 	}
-	
+
 	public int getOrderNo() {
 		return orderNo;
 	}
