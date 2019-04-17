@@ -22,6 +22,10 @@ public class OrderVO {
 	public OrderVO(LocalDateTime order,CustomerVO customer) {
 		this.timestampStartedOrder = order;
 		this.customer = customer;
+		if(customer != null) {
+			customer.setBestellung(this);
+		}
+		
 		
 		this.shoppingBasket = new PizzaVO[OrderVO.MAX_DISHES];
 		this.index = 0;

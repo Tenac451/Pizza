@@ -4,7 +4,7 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * 
- * @author Jan Münchberger
+ * @author Jan Mï¿½nchberger
  *
  */
 
@@ -20,7 +20,9 @@ public class CustomerVO {
 	
 	private int id;
 	
-	static final String M = "männlich";
+	private OrderVO bestellung;
+	
+	static final String M = "mÃ¤nnlich";
 	static final String W = "weiblich";
 	static final String N = "";
 	static final String D = "divers";
@@ -28,12 +30,12 @@ public class CustomerVO {
 	private LocalDate dateOfBirth;
 	
 	public CustomerVO(String lastName, String firstName, String gender, LocalDate dateOfBirth) {
-		super();
 		this.setLastName(lastName);
 		this.setFirstName(firstName);
 		this.setGender(gender);
 		this.setDateOfBirth(dateOfBirth);
 		this.id = CustomerVO.nextId;
+		this.setBestellung(null);
 		CustomerVO.nextId = CustomerVO.nextId + 1;
 	}
 	
@@ -106,7 +108,7 @@ public class CustomerVO {
 		return age;
 	}
 	public String toString() {
-		return "ID: "+ this.getId() + ' ' + this.getFirstName() + ' ' + this.getLastName() + ' ' + this.dobToString() + " ist somit " + calculateAge();
+		return "ID: "+ this.getId() + ' ' + this.getFirstName() + ' ' + this.getLastName() + ' ' + this.dobToString() + " ist somit " + calculateAge() + " hat bestelltung:" + this.hasOrder();
 	}
 	
 	public String getLastName() {
@@ -162,6 +164,20 @@ public class CustomerVO {
 	public static int getNextId() {
 		return nextId;
 	}
+
+	public OrderVO getBestellung() {
+		return bestellung;
+	}
+
+	public void setBestellung(OrderVO bestellung) {
+		this.bestellung = bestellung;
+	}
 	
+	public boolean hasOrder() {
+		if(this.getBestellung() != null) {
+			return true;
+		}
+		return false;
+	}
 	
 }

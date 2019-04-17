@@ -56,6 +56,7 @@ public class TestDriver {
 		
 		System.out.println(order4.getNumerOfDishes());
 		
+		System.out.println(jule);
 //		PizzaVO salami4 = (PizzaVO) salami3.clone();
 //		
 //		LocalDate today = LocalDate.now();
