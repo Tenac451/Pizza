@@ -8,12 +8,8 @@ import java.time.format.DateTimeFormatter;
  *
  */
 
-public class CustomerVO {
-	
-	private String lastName;
-	
-	private String firstName;
-	
+public class CustomerVO extends PersonVO{
+		
 	private String gender;
 	
 	private static int nextId = 0;
@@ -30,13 +26,8 @@ public class CustomerVO {
 	private LocalDate dateOfBirth;
 	
 	public CustomerVO(String lastName, String firstName, String gender, LocalDate dateOfBirth) {
-		this.setLastName(lastName);
-		this.setFirstName(firstName);
-		this.setGender(gender);
-		this.setDateOfBirth(dateOfBirth);
-		this.id = CustomerVO.nextId;
-		this.setOrder(null);
-		CustomerVO.nextId = CustomerVO.nextId + 1;
+		this( lastName,  firstName,  null,  0, gender, dateOfBirth);
+		
 	}
 	
 	public CustomerVO(String lastName, String firstName, LocalDate dateOfBirth) {
@@ -47,6 +38,15 @@ public class CustomerVO {
 		this("Mampf", "Martin", LocalDate.of(1990, 5, 24));
 	}
 	
+	public CustomerVO(String lastName, String firstName, String street, int houseNumber, String gender , LocalDate dob) {
+		super(lastName,firstName,street,houseNumber);
+		this.setDateOfBirth(dob);
+		this.setGender(gender);
+		this.id = CustomerVO.nextId;
+		this.setOrder(null);
+		CustomerVO.nextId = CustomerVO.nextId + 1;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -108,23 +108,7 @@ public class CustomerVO {
 		return age;
 	}
 	public String toString() {
-		return "ID: "+ this.getId() + ' ' + this.getFirstName() + ' ' + this.getLastName() + ' ' + this.dobToString() + " ist somit " + calculateAge() + " hat bestelltung:" + this.hasOrder();
-	}
-	
-	public String getLastName() {
-		return lastName;
-	}
-	
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	
-	public String getFirstName() {
-		return firstName;
-	}
-	
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+		return "ID: "+ this.getId() + '\n' + super.toString() + "Alter: " + calculateAge() + " \nBestelltung:" + this.hasOrder();
 	}
 	
 	public String getGender() {
