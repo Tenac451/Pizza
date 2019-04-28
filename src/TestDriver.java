@@ -52,7 +52,7 @@ public class TestDriver {
 		//order4.deleteDish();
 		System.out.println(order4);
 		
-		System.out.println(order4.getDish(1));
+		System.out.println(order4.getDish(10));
 		
 		System.out.println(order4.getNumerOfDishes());
 		

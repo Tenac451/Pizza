@@ -2,18 +2,24 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
+/**
+ * 
+ * @author Jan Münchberger
+ *
+ */
+
 public class OrderVO {
 	
-	protected int orderNo;
-	
-	private static int nextOrderNo = 0;
 	private static final int MAX_DISHES = 10;
+	private static int nextOrderNo = 0;
 	
-	protected LocalDateTime timestampStartedOrder;
-	protected LocalDateTime timestampDeliverdOrder;
-	protected CustomerVO customer; // darf nach der initialisierung nicht mehr null sein. #TODO 
-	protected PizzaVO[] shoppingBasket; 
-	int index;
+	private int orderNo;
+	private int index;
+	private LocalDateTime timestampStartedOrder;
+	private LocalDateTime timestampDeliverdOrder;
+	private CustomerVO customer; // IM UML als customer1 aufgeführt. #TODO 
+	private PizzaVO[] shoppingBasket; 
+	
 	
 	public OrderVO() {
 		this(LocalDateTime.now(), null);
@@ -23,9 +29,8 @@ public class OrderVO {
 		this.timestampStartedOrder = order;
 		this.customer = customer;
 		if(customer != null) {
-			customer.setBestellung(this);
+			customer.setOrder(this);
 		}
-		
 		
 		this.shoppingBasket = new PizzaVO[OrderVO.MAX_DISHES];
 		this.index = 0;
@@ -42,8 +47,10 @@ public class OrderVO {
 	}
 	
 	public void addDish(PizzaVO dish) {
-		this.shoppingBasket[this.index] = dish;
-		this.index++;
+		if(dish != null) {
+			this.shoppingBasket[this.index] = dish;
+			this.index++;
+		}
 	}
 	
 	public void deleteDish() {
@@ -53,7 +60,10 @@ public class OrderVO {
 		}
 	}
 	public PizzaVO getDish(int index) {
-		return this.shoppingBasket[index];
+		if(index < OrderVO.MAX_DISHES) {
+			return this.shoppingBasket[index];
+		}
+		return null;
 	}
 	
 	public int getNumerOfDishes() {

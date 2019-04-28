@@ -4,7 +4,7 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * 
- * @author Jan M�nchberger
+ * @author Jan Münchberger
  *
  */
 
@@ -20,7 +20,7 @@ public class CustomerVO {
 	
 	private int id;
 	
-	private OrderVO bestellung;
+	private OrderVO order; // #TODO Im UML als orderVO beschrieben
 	
 	static final String M = "männlich";
 	static final String W = "weiblich";
@@ -35,7 +35,7 @@ public class CustomerVO {
 		this.setGender(gender);
 		this.setDateOfBirth(dateOfBirth);
 		this.id = CustomerVO.nextId;
-		this.setBestellung(null);
+		this.setOrder(null);
 		CustomerVO.nextId = CustomerVO.nextId + 1;
 	}
 	
@@ -165,16 +165,16 @@ public class CustomerVO {
 		return nextId;
 	}
 
-	public OrderVO getBestellung() {
-		return bestellung;
+	public OrderVO getOrder() {
+		return this.order;
 	}
 
-	public void setBestellung(OrderVO bestellung) {
-		this.bestellung = bestellung;
+	public void setOrder(OrderVO order) {
+		this.order = order;
 	}
 	
 	public boolean hasOrder() {
-		if(this.getBestellung() != null) {
+		if(this.getOrder() != null) {
 			return true;
 		}
 		return false;
