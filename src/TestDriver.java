@@ -9,15 +9,25 @@ public class TestDriver {
 		
 	
 		System.out.println("####### --  Pizza BestellSystem Testsetup -- ######");
+		System.out.println("####### --  Erstellen von PizzaVO Objekten -- ######");
+		
+		PizzaVO bocusespecial = new PizzaVO();
+		PizzaVO salami = new PizzaVO(30,"bela Salami", new String[]  {"Salami" ,"Gauda"} , 6.50f);
+		PizzaVO funghi = new PizzaVO(31,"el Funghi", new String[]  {"Champion" ,"Gauda"} , 6.50f);
+		PizzaVO tonno = new PizzaVO(32,"Tonno", new String[]  {"Thundfisch", "Tomaten", "rote Zwiebeln" ,"Gauda"} , 7.50f);
+		PizzaVO hawaii = new PizzaVO(33,"USA Hawaii Classic", new String[]  {"Kochschinken", "Annanas" ,"Gauda"} , 8.20f);
+		PizzaVO quadro = new PizzaVO(34,"4 Käse", new String[]  {"Mozerella", "Ziegenkäse", "Gorgonzola" ,"Gauda"} , 9.50f);
+		PizzaVO[] pizzen = {bocusespecial, salami, funghi, tonno, hawaii, quadro};
+		
+		for (PizzaVO pizza : pizzen) {
+			System.out.println(pizza);
+            System.out.println(pizza.ingredientsToString());
+        } 
 		
 		System.out.println();
+		System.out.println("####### --  erstellen von CustomerVO  -- ######");
 		System.out.println();
-		System.out.println("####### --  Customer -- ######");
-		System.out.println();
-		System.out.println();
-		/**
-		 * Erstellen diverser Kunden
-		 */
+
 		CustomerVO martin = new CustomerVO();
 		CustomerVO timo = new CustomerVO("Timo", "Hansen", CustomerVO.M, LocalDate.of(1700, 5, 24));
 		CustomerVO jule = new CustomerVO("Jule", "Hansen", CustomerVO.W, LocalDate.of(1998, 5, 24));
@@ -25,106 +35,86 @@ public class TestDriver {
 		CustomerVO stefan = new CustomerVO("Stefan", "Hansen", "Telegrafenberg", 2 , CustomerVO.M, LocalDate.of(2005, 1, 1));
 		CustomerVO steffi = new CustomerVO("Steffi", "Hansen", "Einsteinstraße", 12 , CustomerVO.M, LocalDate.of(1985, 1, 1));
 		
-		System.out.println(martin);
-		System.out.println(timo);
-		System.out.println(jule);
-		System.out.println(kirsten);
-		System.out.println(stefan);
-		System.out.println(steffi);
+		CustomerVO[] kunden = {martin, timo, jule, kirsten, stefan, steffi};
 		
-		
-		System.out.println();
-		System.out.println();
-		System.out.println("####### --  Cusomer Ende -- ######");
-		System.out.println("####### --  Personal -- ######");
-		System.out.println();
-		System.out.println();
-		
-		EmployeeVO[] employees = new EmployeeVO[3];
-		DeliveryManVO mario = new DeliveryManVO("1", "Superfasti", "Mario");
-		employees[0] = mario;
-		ChefVO bocuse = new ChefVO("01","Bocuse", "Brune");
-		employees[1] = bocuse;
-		ChefVO pocuse = new ChefVO("Pocuse", "Peter", Color.RED);
-		employees[2] = bocuse;
-		
-		
-		for (EmployeeVO employee : employees) {
-			 
-            System.out.println(employee);
- 
+		for (CustomerVO kunde : kunden) {
+            System.out.println(kunde);
         } 
 		
+		System.out.println();
+		System.out.println("####### --  Personal Erstellen -- ######");
+		System.out.println();
 		
-		/**
-		 * Erstellen von Orders
-		 */
 		
-		OrderVO order = new OrderVO();
-		OrderVO order3 = new OrderVO(LocalDateTime.now(), jule);
+		DeliveryManVO mario = new DeliveryManVO("1", "Superfasti", "Mario");
+		ChefVO bocuse = new ChefVO("01","Bocuse", "Brune");
+		ChefVO pocuse = new ChefVO("Pocuse", "Peter", Color.RED);
+		
+		EmployeeVO[] employees = {mario, bocuse, pocuse};
+		
+		for (EmployeeVO employee : employees) {			 
+            System.out.println(employee);
+        } 
+		
+		System.out.println();
+		System.out.println("####### --  Orders erstellen -- ######");
+		System.out.println();
+		
+		OrderVO order1 = new OrderVO();
+		order1.setCustomer(martin);
+		order1.addDish(hawaii);
+		order1.addDish(hawaii);
+		order1.addDish(hawaii);
+		order1.addDish(hawaii);
+		order1.addDish(hawaii);
+		order1.addDish(hawaii);
+		order1.addDish(hawaii);
+		order1.addDish(hawaii);
+		order1.addDish(hawaii);
+		order1.addDish(hawaii);
+		order1.addDish(hawaii);
+		order1.addDish(salami);
+		
 		OrderVO order2 = new OrderVO();
-		OrderVO order4 = new OrderVO(LocalDateTime.now(), jule);
+		order2.setTimestampStartedOrder(LocalDateTime.now());
+		order2.setCustomer(steffi);
 		
-		//System.out.println(order);
+		OrderVO order3 = new OrderVO();
+		order3.addDish(hawaii);
 		
-//		order.setTimestampStartedOrder(LocalDateTime.of(2015, Month.JULY, 29, 19, 30, 40));
-//		order.setTimestampDeliverdOrder(LocalDateTime.of(2015, Month.JULY, 29, 19, 30, 40));
-//		
-//		System.out.println(order);
-//		System.out.println(order2);
-//		System.out.println(order3);
-//		System.out.println(order4);
-//		
-		//LocalDateTime today = LocalDateTime.now();
-		//System.out.println(today);
+		OrderVO order4 = new OrderVO();
+		order4.setTimestampDeliverdOrder(LocalDateTime.of(2015, Month.JULY, 29, 19, 30, 40));
+		order4.addDish(quadro);
+		order4.addDish(salami);
+		order4.addDish(salami);
+		order4.setCustomer(timo);
 		
+		OrderVO order5 = new OrderVO(LocalDateTime.now(), jule);
 		
+		OrderVO[] orders = {order1, order2, order3, order4, order5};
 		
-//		
-//		System.out.println(bocuse.getLastName());
-//		PizzaVO salami1 = new PizzaVO();
-////	
-//		String[] zutaten2 =  {"Salami" ,"Gauda"};
-//		PizzaVO salami2= new PizzaVO("Salami", zutaten2, 2.50f);
-////		
-//		String[] zutaten3 =  {"Salami" ,"Käse", "Tomaten"};
-//		PizzaVO salami3 = new PizzaVO("Salami", zutaten3, 2.50f);
-		
-//		order4.addDish(salami3);
-//		order4.addDish(salami2);
-//		order4.addDish(salami3);
-//		
-//		System.out.println(order4);
-//		
-//		//order4.deleteDish();
-//		System.out.println(order4);
-//		
-//		System.out.println(order4.getDish(10));
-//		
-//		System.out.println(order4.getNumerOfDishes());
-//		
-		
-//		PizzaVO salami4 = (PizzaVO) salami3.clone();
-//		
-//		LocalDate today = LocalDate.now();
+		for (OrderVO order : orders) {			 
+            System.out.println(order);
+        } 
+		System.out.println("Order von Timo");
+		System.out.println(timo.getOrder());
+		System.out.println();
+		 
+		 // Martin klaut Timos Order weil er hungrig ist. 
+		 OrderVO martinssorderold = martin.getOrder();
+		 OrderVO timosorder = timo.getOrder();
+		 System.out.println("Martins alte Order");
+		 System.out.println(martinssorderold);
+		 timosorder.setCustomer(martin);
+		 System.out.println("Order von Timo sollte null sein weil geklaut bei martin");
+		 System.out.println(timo.getOrder());
+		 System.out.println("Martin mit Timos Order");
+		 System.out.println(martin);
+		 System.out.println();
+		 System.out.println("Martin Order die er nicht mehr kennt");
+		 System.out.println(martinssorderold);
 
-
-
-		
-//		System.out.println("###### toStrings #######");
-//		System.out.println(bocuse);
-//		System.out.println(bocuse2);
-//		System.out.println(timo);
-//		System.out.println(martin);
-//		System.out.println(stefan);
-//		System.out.println(kirsten);
-//		System.out.println(jule);
-//		System.out.println(salami1);
-//		System.out.println(salami2);
-//		System.out.println(salami3);
-//		System.out.println(salami4);
-//
-//		
+		 
 //		System.out.println("###### hashCodes #######");
 //		System.out.println("HashCode Bocuse: " + bocuse.hashCode());
 //		System.out.println("HashCode Bocuse2: " + bocuse2.hashCode());

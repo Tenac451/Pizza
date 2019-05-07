@@ -7,6 +7,8 @@ public class EmployeeVO extends PersonVO {
 	public EmployeeVO(String personnenlNo, String lastName, String firstName) {
 		super(lastName, firstName, null, 0);
 		this.personnelNo = personnenlNo;
+		this.salary = 1200.5f;
+		this.vacationDays = 26;
 	}
 	public EmployeeVO() {
 		this(null,null,null);

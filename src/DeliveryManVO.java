@@ -12,4 +12,10 @@ public class DeliveryManVO extends EmployeeVO {
 		return "Delivery Man:\nDeliveryMan_"
 				+ super.toString();
 	}
+	public String getDriverLicence() {
+		return driverLicence;
+	}
+	public void setDriverLicence(String driverLicence) {
+		this.driverLicence = driverLicence;
+	}
 }

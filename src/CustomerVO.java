@@ -154,6 +154,9 @@ public class CustomerVO extends PersonVO{
 	}
 
 	public void setOrder(OrderVO order) {
+		if(this.order != null) {
+			this.order.setCustomer(null);
+		}
 		this.order = order;
 	}
 	

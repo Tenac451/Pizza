@@ -2,7 +2,7 @@ import java.awt.Color;
 
 /**
  * 
- * @author Jan MÃ¼nchberger
+ * @author Jan Münchberger
  *
  */
 

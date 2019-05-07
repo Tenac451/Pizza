@@ -17,7 +17,7 @@ public class OrderVO {
 	private int index;
 	private LocalDateTime timestampStartedOrder;
 	private LocalDateTime timestampDeliverdOrder;
-	private CustomerVO customer; // IM UML als customer1 aufgeführt. #TODO 
+	private CustomerVO customer;
 	private PizzaVO[] shoppingBasket; 
 	
 	
@@ -47,7 +47,7 @@ public class OrderVO {
 	}
 	
 	public void addDish(PizzaVO dish) {
-		if(dish != null) {
+		if(dish != null && this.index < OrderVO.MAX_DISHES) {
 			this.shoppingBasket[this.index] = dish;
 			this.index++;
 		}
@@ -87,9 +87,10 @@ public class OrderVO {
 		}
 		for (PizzaVO  dish: this.shoppingBasket) {
 			if(dish instanceof PizzaVO) {
-				result.append(dish.toString() + "\n");
+				result.append("\n" + dish.toString());
 			}
 	    } 
+		result.append("\n");
 		return result.toString();
 	}
 	
@@ -168,7 +169,14 @@ public class OrderVO {
 	}
 
 	public void setCustomer(CustomerVO customer) {
+		if(this.customer != null && customer != null) {
+			// entfernen der Order sollte ein anderer Kunde diese bereits besitzen. 
+			this.customer.setOrder(null);
+		}
 		this.customer = customer;
+		if(customer != null) {
+			customer.setOrder(this);
+		}
 	}
 	
 	public static int getNextOrderNo() {
