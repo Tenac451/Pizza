@@ -96,6 +96,7 @@ public class TestDriver {
 		for (OrderVO order : orders) {			 
             System.out.println(order);
         } 
+		
 		System.out.println("Order von Timo");
 		System.out.println(timo.getOrder());
 		System.out.println();
@@ -113,26 +114,13 @@ public class TestDriver {
 		 System.out.println();
 		 System.out.println("Martin Order die er nicht mehr kennt");
 		 System.out.println(martinssorderold);
-
 		 
-//		System.out.println("###### hashCodes #######");
-//		System.out.println("HashCode Bocuse: " + bocuse.hashCode());
-//		System.out.println("HashCode Bocuse2: " + bocuse2.hashCode());
-//		System.out.println("HashCode Timo: " + timo.hashCode());
-//		System.out.println("HashCode Stefan: " + stefan.hashCode());
-//		System.out.println("HashCode Kirsten: " + kirsten.hashCode());
-//		System.out.println("HashCode Jule: " + jule.hashCode());
-//		System.out.println("HashCode Martin: " + martin.hashCode());
-//		System.out.println("HashCode Salami: " + salami1.hashCode());
-//		System.out.println("HashCode Salami2: " + salami2.hashCode());
-//		System.out.println("HashCode Salami3: " + salami3.hashCode());
-//		System.out.println("HashCode Salami4: " + salami4.hashCode());
-//		
-//		System.out.println("###### equals #######");
-//		System.out.println("equals Salami3 u 4: " + salami4.equals(salami3));
-//		System.out.println("equals Salami4 u 3: " + salami3.equals(salami4));
-//		System.out.println("equals Salami1 u 3: " + salami1.equals(salami3));
-//		System.out.println("equals Salami1 u Timo: " + salami1.equals(timo));
+		System.out.println(salami.getClass().getName());
+		System.out.println("####### --  Menu -- ######");
+		System.out.println();
+			
+		MenuVO menu = new MenuVO();
+		System.out.println(menu);
 	}
 
 }

@@ -42,11 +42,16 @@ public class PastaVO  extends DishVO{
 	}
 	
 	public String getTypeOfPastaString() {
-		if(this.getTypeOfPasta() == 5)
-			return "Tortellini";
-		if(this.getTypeOfPasta() == 2)
-			return "Lasange";
-		return "Standard";
+		switch (this.getTypeOfPasta()) {
+	        case 4:
+	        	return "Spaghetti";
+	        case 5:
+	        	return "Tortellini";
+	        case 6:
+	        	return "Gnocchi";
+	        default:
+	        	return "Standard";
+		}
 	}
 
 }
