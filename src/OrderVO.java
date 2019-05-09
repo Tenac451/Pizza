@@ -14,25 +14,20 @@ public class OrderVO {
 	private static int nextOrderNo = 0;
 	
 	private int orderNo;
+	private String state;
 	private int index;
 	private LocalDateTime timestampStartedOrder;
 	private LocalDateTime timestampDeliverdOrder;
 	private CustomerVO customer;
-	private PizzaVO[] shoppingBasket; 
+	private DishVO[] shoppingBasket; 
+
 	
-	
-	public OrderVO() {
-		this(LocalDateTime.now(), null);
-	}
-	
-	public OrderVO(LocalDateTime order,CustomerVO customer) {
-		this.timestampStartedOrder = order;
-		this.customer = customer;
-		if(customer != null) {
-			customer.setOrder(this);
-		}
+	public OrderVO(LocalDateTime timestampStartedOrder,CustomerVO customer) {
+		this.setTimestampStartedOrder(timestampStartedOrder);
+		this.setCustomer(customer);
+		this.setState("started");
 		
-		this.shoppingBasket = new PizzaVO[OrderVO.MAX_DISHES];
+		this.shoppingBasket = new DishVO[OrderVO.MAX_DISHES];
 		this.index = 0;
 		
 		if((OrderVO.getNextOrderNo() == 0) || 
@@ -46,7 +41,7 @@ public class OrderVO {
 		
 	}
 	
-	public void addDish(PizzaVO dish) {
+	public void addDish(DishVO dish) {
 		if(dish != null && this.index < OrderVO.MAX_DISHES) {
 			this.shoppingBasket[this.index] = dish;
 			this.index++;
@@ -59,7 +54,18 @@ public class OrderVO {
 			this.shoppingBasket[this.index] = null;
 		}
 	}
-	public PizzaVO getDish(int index) {
+	
+	public float calculatePriceDishes () {
+		float erg = 0.0f;
+		for (DishVO  dish: this.shoppingBasket) {
+			if(dish instanceof DishVO) {
+				erg = erg + dish.getPrice();
+			}
+	    }
+		return erg;
+	}
+	
+	public DishVO getDish(int index) {
 		if(index < OrderVO.MAX_DISHES) {
 			return this.shoppingBasket[index];
 		}
@@ -72,24 +78,27 @@ public class OrderVO {
 	
 	public String toString() {
 		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.mm.yyyy hh:mm");
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.mm.yyyy hh:mm");
 		StringBuilder result = new StringBuilder();
-		result.append( "OrderVO " + this.getOrderNo() );
-		
-		if(this.getTimestampStartedOrder() instanceof LocalDateTime) {
-			result.append( " from " + this.getTimestampStartedOrder().format(formatter) );
-		}
-		if(this.timestampDeliverdOrder instanceof LocalDateTime) {
-			result.append( " with delivery at " + this.timestampDeliverdOrder.format(formatter));
-		}
-		if (this.getCustomer() != null) {
-			result.append("\nof customer:" + this.getCustomer().getFirstName() + " " + this.getCustomer().getLastName() + ", ID of customer: " + this.getCustomer().getId() + "\n");
-		}
-		for (PizzaVO  dish: this.shoppingBasket) {
-			if(dish instanceof PizzaVO) {
+//		result.append( "OrderVO " + this.getOrderNo() );
+//		
+//		if(this.getTimestampStartedOrder() instanceof LocalDateTime) {
+//			result.append( " from " + this.getTimestampStartedOrder().format(formatter) );
+//		}
+//		if(this.timestampDeliverdOrder instanceof LocalDateTime) {
+//			result.append( " with delivery at " + this.timestampDeliverdOrder.format(formatter));
+//		}
+//		if (this.getCustomer() != null) {
+//			result.append("\nof customer:" + this.getCustomer().getFirstName() + " " + this.getCustomer().getLastName() + ", ID of customer: " + this.getCustomer().getId() + "\n");
+//		}
+		for (DishVO  dish: this.shoppingBasket) {
+			if(dish instanceof DishVO) {
 				result.append("\n" + dish.toString());
 			}
 	    } 
+		result.append("\n");
+		result.append("Preis:" + this.calculatePriceDishes());
+		result.append("\n");
 		result.append("\n");
 		return result.toString();
 	}
@@ -101,6 +110,7 @@ public class OrderVO {
 		result = prime * result + ((customer == null) ? 0 : customer.hashCode());
 		result = prime * result + index;
 		result = prime * result + orderNo;
+		result = prime * result + ((state == null) ? 0 : state.hashCode());
 		result = prime * result + Arrays.hashCode(shoppingBasket);
 		result = prime * result + ((timestampDeliverdOrder == null) ? 0 : timestampDeliverdOrder.hashCode());
 		result = prime * result + ((timestampStartedOrder == null) ? 0 : timestampStartedOrder.hashCode());
@@ -124,6 +134,8 @@ public class OrderVO {
 		if (index != other.index)
 			return false;
 		if (orderNo != other.orderNo)
+			return false;
+		if (!state.equals(other.state))
 			return false;
 		if (!Arrays.equals(shoppingBasket, other.shoppingBasket))
 			return false;
@@ -181,6 +193,14 @@ public class OrderVO {
 	
 	public static int getNextOrderNo() {
 		return nextOrderNo;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 	
 }

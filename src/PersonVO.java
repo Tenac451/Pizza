@@ -1,5 +1,5 @@
 
-class PersonVO {
+public abstract class PersonVO {
 
 	protected String lastName;
 	protected String firstName;
