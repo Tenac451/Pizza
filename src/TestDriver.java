@@ -122,40 +122,48 @@ public class TestDriver {
 	/**
 	 * 6.5
 	 */
-		DeliveryManVO mario = new DeliveryManVO("02", "Superfasti", "Mario");
-		DeliveryManVO bocuse = new DeliveryManVO("01","Bocuse", "Brune");
-		ChefVO pocuse = new ChefVO("04", "Pocuse", "Peter");
-	
-		EmployeeVO[] employees = {mario, bocuse, pocuse};
+//		DeliveryManVO mario = new DeliveryManVO("02", "Superfasti", "Mario");
+//		DeliveryManVO bocuse = new DeliveryManVO("01","Bocuse", "Brune");
+//		ChefVO pocuse = new ChefVO("04", "Pocuse", "Peter");
+//	
+//		EmployeeVO[] employees = {mario, bocuse, pocuse};
+//
+//		MenuVO menu = new MenuVO();
+//		
+//		CustomerVO customer1 = new CustomerVO("Timo", "Hansen", CustomerVO.M, LocalDate.of(1700, 5, 24));
+//		CustomerVO customer2 = new CustomerVO("Jule", "Hansen", CustomerVO.W, LocalDate.of(1998, 5, 24));
+//		
+//		
+//		OrderVO order1 = new OrderVO(LocalDateTime.now(), customer1);
+//		OrderVO order2 = new OrderVO(LocalDateTime.now(), customer2);
+//		
+//		System.out.println(menu);
+//		
+//		
+//		Random random = new Random();
+//		
+//		 order1.addDish(menu.getDish(random.nextInt(18)));
+//		 order2.addDish(menu.getDish(random.nextInt(18)));
+//		 order1.addDish(menu.getDish(random.nextInt(18)));
+//		 order2.addDish(menu.getDish(random.nextInt(18)));
+//		 order1.addDish(menu.getDish(random.nextInt(18)));
+//		 order2.addDish(menu.getDish(random.nextInt(18)));
+//		 
+//		 System.out.println(order1);
+//		 System.out.println(order2);
+//		
+//		 
+//		 for (EmployeeVO employee : employees) {			 
+//	            System.out.println(employee);
+//	        }
 
-		MenuVO menu = new MenuVO();
-		
-		CustomerVO customer1 = new CustomerVO("Timo", "Hansen", CustomerVO.M, LocalDate.of(1700, 5, 24));
-		CustomerVO customer2 = new CustomerVO("Jule", "Hansen", CustomerVO.W, LocalDate.of(1998, 5, 24));
-		
-		
-		OrderVO order1 = new OrderVO(LocalDateTime.now(), customer1);
-		OrderVO order2 = new OrderVO(LocalDateTime.now(), customer2);
-		
-		System.out.println(menu);
-		
-		
-		Random random = new Random();
-		
-		 order1.addDish(menu.getDish(random.nextInt(18)));
-		 order2.addDish(menu.getDish(random.nextInt(18)));
-		 order1.addDish(menu.getDish(random.nextInt(18)));
-		 order2.addDish(menu.getDish(random.nextInt(18)));
-		 order1.addDish(menu.getDish(random.nextInt(18)));
-		 order2.addDish(menu.getDish(random.nextInt(18)));
+		 /**
+		 *  7.1
+		 */
+		 CustomerVO customer3 = new CustomerVO("Peter", "Hansen", CustomerVO.W, LocalDate.of(1990, 5, 24));
+		 Ordering ordering = new Ordering();
 		 
-		 System.out.println(order1);
-		 System.out.println(order2);
-		
+		 // aufgehört bei Seite 11 Folie 7.3
 		 
-		 for (EmployeeVO employee : employees) {			 
-	            System.out.println(employee);
-	        } 
 	}
-
 }

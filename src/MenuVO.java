@@ -54,6 +54,7 @@ public class MenuVO {
 		sb.append("MENU PIZZA PRONTO\n\n");
 		sb.append("Prima special pizzas: \n 1 normal (Diameter approx. 26 cm) and \n 2 grande (Diameter approx. 32 cm)\n");
 		
+		//#TODO
 		for(i = i; i < dishes.length && dishes[i] instanceof PizzaVO ; i = i + 1)
 		{
 			if (i == 0 || dishes[i-1].getNumber() != dishes[i].getNumber()) {
@@ -68,7 +69,8 @@ public class MenuVO {
 		sb.append("\n");sb.append("\n");
 		sb.append("Prima special pastas: \n 4 Spaghetti \n 5 Tortellini \n 6 Gnocchi \n");
 
-
+		//#TODO
+		
 		for(i = i; i < dishes.length && dishes[i] instanceof PastaVO ; i = i + 1)
 		{
 			if (i == 0 || dishes[i-1].getNumber() != dishes[i].getNumber()) {
@@ -83,7 +85,7 @@ public class MenuVO {
 		
 		sb.append("\n");sb.append("\n");
 		sb.append("Prima desserts \n");
-		
+		//#TODO
 		for(i = i; i < dishes.length && dishes[i] instanceof DessertVO ; i = i + 1)
 		{
 			if (i == 0 || dishes[i-1].getNumber() != dishes[i].getNumber()) {

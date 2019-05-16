@@ -11,7 +11,6 @@ import java.util.Arrays;
 public class OrderVO {
 	
 	private static final int MAX_DISHES = 10;
-	private static int nextOrderNo = 0;
 	
 	private int orderNo;
 	private String state;
@@ -22,22 +21,13 @@ public class OrderVO {
 	private DishVO[] shoppingBasket; 
 
 	
-	public OrderVO(LocalDateTime timestampStartedOrder,CustomerVO customer) {
+	public OrderVO(int orderNo, String state, LocalDateTime timestampStartedOrder,CustomerVO customer) {
 		this.setTimestampStartedOrder(timestampStartedOrder);
 		this.setCustomer(customer);
-		this.setState("started");
-		
+		this.setState(state);
+		this.orderNo = orderNo;
 		this.shoppingBasket = new DishVO[OrderVO.MAX_DISHES];
 		this.index = 0;
-		
-		if((OrderVO.getNextOrderNo() == 0) || 
-		  ((LocalDateTime.now().getDayOfYear()) == 1))
-		{
-			OrderVO.nextOrderNo = LocalDateTime.now().getYear() * 100000;
-		}
-		
-		OrderVO.nextOrderNo = OrderVO.nextOrderNo + 1;
-		this.orderNo = OrderVO.getNextOrderNo();
 		
 	}
 	
@@ -53,6 +43,15 @@ public class OrderVO {
 			this.index--;
 			this.shoppingBasket[this.index] = null;
 		}
+	}
+	
+	public void deleteDish(DishVO dish) {
+		//#TODO delete das richtige Dish
+		for (DishVO basketDish : shoppingBasket) {			 
+            if(basketDish.equals(dish)) {
+            	basketDish = null;
+            }
+        }
 	}
 	
 	public float calculatePriceDishes () {
@@ -189,10 +188,6 @@ public class OrderVO {
 		if(customer != null) {
 			customer.setOrder(this);
 		}
-	}
-	
-	public static int getNextOrderNo() {
-		return nextOrderNo;
 	}
 
 	public String getState() {
