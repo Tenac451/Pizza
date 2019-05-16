@@ -1,11 +1,11 @@
 import java.util.Arrays;
 
 abstract class DishVO {
-	
-protected int number;
-protected String name;
-protected String[] ingredients;
-protected float price;
+
+	protected int number;
+	protected String name;
+	protected String[] ingredients;
+	protected float price;
 
 	public DishVO(int number, String name, String[] ingredients, float price) {
 		this.setNumber(number);
@@ -13,11 +13,11 @@ protected float price;
 		this.setIngredients(ingredients);
 		this.setPrice(price);
 	}
-	
+
 	public DishVO(int number, String name, float price) {
-		this(number, name,  new String[0] , price);
+		this(number, name, new String[0], price);
 	}
-	
+
 	public DishVO() {
 		this(0, null, 0.0f);
 	}
@@ -51,7 +51,7 @@ protected float price;
 	}
 
 	public void setPrice(float price) {
-		if(price > 0.0f) {
+		if (price > 0.0f) {
 			this.price = price;
 		} else {
 			this.price = 0.0f;
@@ -91,14 +91,14 @@ protected float price;
 			return false;
 		return true;
 	}
-	
+
 //	public Object clone() {
 //		return new Object();
 //	}
-	public String ingredientsToString() {	
+	public String ingredientsToString() {
 		return String.join(",", this.ingredients);
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder();
@@ -111,9 +111,9 @@ protected float price;
 		result.append(this.ingredientsToString());
 		return result.toString();
 	}
-	
+
 	public abstract String getNameOfDish();
-	
+
 	public abstract int getNumberOfDish();
-	
+
 }

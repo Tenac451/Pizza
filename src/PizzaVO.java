@@ -7,11 +7,12 @@
 public class PizzaVO extends DishVO {
 
 	private int size;
-	
+
 	public PizzaVO(int number, String name, String[] ingredients, float price, int size) {
 		super(number, name, ingredients, price);
 		this.setSize(size);
 	}
+
 	public PizzaVO(int number, String name, String[] ingredients, float price) {
 		super(number, name, ingredients, price);
 		this.setSize(0);
@@ -20,7 +21,7 @@ public class PizzaVO extends DishVO {
 	public PizzaVO() {
 		super();
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -45,20 +46,21 @@ public class PizzaVO extends DishVO {
 
 	@Override
 	public Object clone() {
-		PizzaVO cloneObj = new PizzaVO(this.getNumber(),this.getName(),this.getIngredients(),this.getPrice(), this.getSize());
-		return cloneObj;	
+		PizzaVO cloneObj = new PizzaVO(this.getNumber(), this.getName(), this.getIngredients(), this.getPrice(),
+				this.getSize());
+		return cloneObj;
 	}
 
 	@Override
 	public String getNameOfDish() {
-		return "Pizza " + this.getName()  +" - "+ this.getSizeString();
+		return "Pizza " + this.getName() + " - " + this.getSizeString();
 	}
 
 	@Override
 	public int getNumberOfDish() {
-		return this.size + (this.number*10);
+		return this.size + (this.number * 10);
 	}
-	
+
 	public int getSize() {
 		return size;
 	}
@@ -68,9 +70,9 @@ public class PizzaVO extends DishVO {
 	}
 
 	public String getSizeString() {
-		if(this.getSize() == 1)
+		if (this.getSize() == 1)
 			return "Normal";
-		if(this.getSize() == 2)
+		if (this.getSize() == 2)
 			return "Grande";
 		return "Standard";
 	}

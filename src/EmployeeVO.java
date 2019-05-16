@@ -10,16 +10,19 @@ public abstract class EmployeeVO extends PersonVO {
 		this.salary = 1200.5f;
 		this.vacationDays = 26;
 	}
+
 	public EmployeeVO() {
-		this(null,null,null);
+		this(null, null, null);
 	}
-	
+
 	public String getPersonnelNo() {
 		return personnelNo;
 	}
+
 	public void setPersonnelNo(String personnelNo) {
 		this.personnelNo = personnelNo;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -29,6 +32,7 @@ public abstract class EmployeeVO extends PersonVO {
 		result = prime * result + vacationDays;
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -49,9 +53,11 @@ public abstract class EmployeeVO extends PersonVO {
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
-		return personnelNo + "  " + super.toString() + "Salary: " + salary + "\nNumber of vacation days: " + vacationDays + "\n" ;
+		return personnelNo + "  " + super.toString() + "Salary: " + salary + "\nNumber of vacation days: "
+				+ vacationDays + "\n";
 	}
-	
+
 }

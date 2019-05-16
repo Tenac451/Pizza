@@ -8,38 +8,38 @@ import java.time.format.DateTimeFormatter;
  *
  */
 
-public class CustomerVO extends PersonVO{
-		
+public class CustomerVO extends PersonVO {
+
 	private String gender;
-	
+
 	private static int nextId = 0;
-	
+
 	private int id;
-	
+
 	private OrderVO order; // #TODO Im UML als orderVO beschrieben
-	
+
 	static final String M = "männlich";
 	static final String W = "weiblich";
 	static final String N = "";
 	static final String D = "divers";
-	
+
 	private LocalDate dateOfBirth;
-	
+
 	public CustomerVO(String lastName, String firstName, String gender, LocalDate dateOfBirth) {
-		this( lastName,  firstName,  null,  0, gender, dateOfBirth);
-		
+		this(lastName, firstName, null, 0, gender, dateOfBirth);
+
 	}
-	
+
 	public CustomerVO(String lastName, String firstName, LocalDate dateOfBirth) {
-		this(lastName , firstName, CustomerVO.N , dateOfBirth);
+		this(lastName, firstName, CustomerVO.N, dateOfBirth);
 	}
-	
+
 	public CustomerVO() {
 		this("Mampf", "Martin", LocalDate.of(1990, 5, 24));
 	}
-	
-	public CustomerVO(String lastName, String firstName, String street, int houseNumber, String gender , LocalDate dob) {
-		super(lastName,firstName,street,houseNumber);
+
+	public CustomerVO(String lastName, String firstName, String street, int houseNumber, String gender, LocalDate dob) {
+		super(lastName, firstName, street, houseNumber);
 		this.setDateOfBirth(dob);
 		this.setGender(gender);
 		this.id = CustomerVO.nextId;
@@ -95,43 +95,45 @@ public class CustomerVO extends PersonVO{
 		result = this.getDateOfBirth().format(DateTimeFormatter.ofPattern("dd MM yyyy"));
 		return result;
 	}
-	
+
 	public short calculateAge() {
 		short age = -1;
-		if(this.dateOfBirth == null ) {
+		if (this.dateOfBirth == null) {
 			return (short) -1;
 		}
 		int diff = Period.between(this.getDateOfBirth(), LocalDate.now()).getYears();
-		if(diff < 32767) {
+		if (diff < 32767) {
 			age = (short) diff;
 		}
 		return age;
 	}
+
 	public String toString() {
-		return "ID: "+ this.getId() + '\n' + super.toString() + "Alter: " + calculateAge() + " \nBestelltung:" + this.hasOrder();
+		return "ID: " + this.getId() + '\n' + super.toString() + "Alter: " + calculateAge() + " \nBestelltung:"
+				+ this.hasOrder();
 	}
-	
+
 	public String getGender() {
 		return gender;
 	}
-	
+
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	
+
 	public LocalDate getDateOfBirth() {
-		if(dateOfBirth != null) {
+		if (dateOfBirth != null) {
 			return dateOfBirth;
 		} else {
 			return null;
 		}
 
 	}
-	
+
 	public void setDateOfBirth(LocalDate dateOfBirth) {
-		if(dateOfBirth != null) {
+		if (dateOfBirth != null) {
 			int diff = Period.between(dateOfBirth, LocalDate.now()).getYears();
-			if(diff > 17) {
+			if (diff > 17) {
 				this.dateOfBirth = dateOfBirth;
 			} else {
 				this.dateOfBirth = null;
@@ -154,17 +156,17 @@ public class CustomerVO extends PersonVO{
 	}
 
 	public void setOrder(OrderVO order) {
-		if(this.order != null) {
-			this.order.setCustomer(null);
-		}
+//		if (this.order != null) {
+//			this.order.setCustomer(null);
+//		}
 		this.order = order;
 	}
-	
+
 	public boolean hasOrder() {
-		if(this.getOrder() != null) {
+		if (this.getOrder() != null) {
 			return true;
 		}
 		return false;
 	}
-	
+
 }

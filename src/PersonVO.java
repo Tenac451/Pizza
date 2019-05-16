@@ -5,16 +5,18 @@ public abstract class PersonVO {
 	protected String firstName;
 	protected String street;
 	protected int houseNumber;
-	
+
 	public PersonVO(String lastName, String firstName, String street, int houseNumber) {
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
 		this.setStreet(street);
 		this.setHouseNumber(houseNumber);
 	}
+
 	public PersonVO(String lastName, String firstName) {
 		this(lastName, firstName, null, 0);
 	}
+
 	public PersonVO() {
 		this(null, null);
 	}
@@ -50,6 +52,7 @@ public abstract class PersonVO {
 	public void setHouseNumber(int houseNumber) {
 		this.houseNumber = houseNumber;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -60,6 +63,7 @@ public abstract class PersonVO {
 		result = prime * result + ((street == null) ? 0 : street.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -88,11 +92,11 @@ public abstract class PersonVO {
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
-		return "Name: " + this.getFirstName()+ " " + this.getLastName() + "\n" +
-				"Straße: "+ this.getStreet() +" "+ this.getHouseNumber() + "\n";
+		return "Name: " + this.getFirstName() + " " + this.getLastName() + "\n" + "Straße: " + this.getStreet() + " "
+				+ this.getHouseNumber() + "\n";
 	}
-	
-	
+
 }

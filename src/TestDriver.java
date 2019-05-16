@@ -7,8 +7,7 @@ import java.util.Random;
 public class TestDriver {
 
 	public static void main(String[] args) {
-		
-	
+
 		System.out.println("####### --  Pizza BestellSystem Testsetup -- ######");
 //		System.out.println("####### --  Erstellen von PizzaVO Objekten -- ######");
 //		
@@ -30,7 +29,7 @@ public class TestDriver {
 //		System.out.println();
 //
 //		CustomerVO martin = new CustomerVO();
-		
+
 //		CustomerVO kirsten = new CustomerVO("Kirsten", "Hansen", CustomerVO.D, LocalDate.of(1980, 5, 21));
 //		CustomerVO stefan = new CustomerVO("Stefan", "Hansen", "Telegrafenberg", 2 , CustomerVO.M, LocalDate.of(2005, 1, 1));
 //		CustomerVO steffi = new CustomerVO("Steffi", "Hansen", "EinsteinstraÃŸe", 12 , CustomerVO.M, LocalDate.of(1985, 1, 1));
@@ -118,10 +117,10 @@ public class TestDriver {
 //		System.out.println(salami.getClass().getName());
 //		System.out.println("####### --  Menu -- ######");
 //		System.out.println();
-		
-	/**
-	 * 6.5
-	 */
+
+		/**
+		 * 6.5
+		 */
 //		DeliveryManVO mario = new DeliveryManVO("02", "Superfasti", "Mario");
 //		DeliveryManVO bocuse = new DeliveryManVO("01","Bocuse", "Brune");
 //		ChefVO pocuse = new ChefVO("04", "Pocuse", "Peter");
@@ -157,13 +156,97 @@ public class TestDriver {
 //	            System.out.println(employee);
 //	        }
 
-		 /**
-		 *  7.1
+		/**
+		 * 7.1
 		 */
-		 CustomerVO customer3 = new CustomerVO("Peter", "Hansen", CustomerVO.W, LocalDate.of(1990, 5, 24));
-		 Ordering ordering = new Ordering();
-		 
-		 // aufgehört bei Seite 11 Folie 7.3
-		 
+		CustomerVO customer3 = new CustomerVO("Peter", "Hansen", CustomerVO.W, LocalDate.of(1990, 5, 24));
+		OrderVO order1 = new OrderVO(1, "ready", LocalDateTime.now(), customer3);
+		OrderVO order2 = new OrderVO(2, "started", LocalDateTime.now(), customer3);
+		OrderVO order3 = new OrderVO(3, "confirmed", LocalDateTime.now(), customer3);
+		
+		Kitchen k = new Kitchen();
+		
+		Delivery d = new Delivery();
+		
+		System.out.println(k.startService(order1));
+		System.out.println(k.startService(order2));
+		System.out.println(k.startService(order3));
+		
+		System.out.println(d.startService(order1));
+		System.out.println(d.startService(order2));
+		System.out.println(d.startService(order3));
+		
+		
+		Ordering o = new Ordering();
+		OrderVO orderC = o.startNewOrder(customer3);
+		
+		
+		MenuVO m = Ordering.getMenu();
+//		m.getDish(4);
+		o.addDish(m.getDish(4));
+		orderC.addDish(m.getDish(4));
+		System.out.println(orderC);
+		
+		System.out.println("-----------------------");
+		
+		OrderVO oV = customer3.getOrder();
+		oV.addDish(m.getDish(7));
+		orderC.addDish(m.getDish(7));
+		System.out.println(orderC.getCustomer());
+		System.out.println(order3.getCustomer());
+		
+		System.out.println("-----------------------");
+		
+		o.confirmOrder();
+		o.startService();
+		o.startService();
+		o.startService();
+		System.out.println(oV);
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
