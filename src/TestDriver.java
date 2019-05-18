@@ -160,6 +160,9 @@ public class TestDriver {
 		 * 7.1
 		 */
 		CustomerVO customer3 = new CustomerVO("Peter", "Hansen", CustomerVO.W, LocalDate.of(1990, 5, 24));
+		CustomerVO customer2 = new CustomerVO("Rita", "Hansen", CustomerVO.W, LocalDate.of(1990, 5, 24));
+		CustomerVO customer1 = new CustomerVO("Klaus", "Hansen", CustomerVO.W, LocalDate.of(1990, 5, 24));
+		
 		OrderVO order1 = new OrderVO(1, "ready", LocalDateTime.now(), customer3);
 		OrderVO order2 = new OrderVO(2, "started", LocalDateTime.now(), customer3);
 		OrderVO order3 = new OrderVO(3, "confirmed", LocalDateTime.now(), customer3);
@@ -182,7 +185,7 @@ public class TestDriver {
 		
 		
 		MenuVO m = Ordering.getMenu();
-//		m.getDish(4);
+
 		o.addDish(m.getDish(4));
 		orderC.addDish(m.getDish(4));
 		System.out.println(orderC);
@@ -202,6 +205,45 @@ public class TestDriver {
 		o.startService();
 		o.startService();
 		System.out.println(oV);
+		
+		System.out.println("-----------------------");
+		
+		customer1.setOrder(order1);
+		customer2.setOrder(order2);
+		
+		System.out.println("-----------Rita------------");
+		System.out.println(order2.getCustomer());
+		
+		order2.setCustomer(customer1);
+		
+		System.out.println("---------an Klaus--------------");
+		System.out.println(order2.getCustomer());
+		
+		System.out.println("-------------keiner Orer----------");
+		System.out.println(customer2.getOrder());
+		
+		order2.setCustomer(customer3);
+		
+		System.out.println("---------an Peter--------------");
+		System.out.println(order2.getCustomer());
+		
+		
+		System.out.println(customer1.getOrder()); // 
+		System.out.println(customer2.getOrder()); // nix
+		System.out.println(customer3.getOrder()); // 2
+		
+		
+		CustomerVO customer4 = new CustomerVO("Klaus", "Hansen", CustomerVO.W, LocalDate.of(1990, 5, 24));
+		OrderVO order4 = new OrderVO(3, "confirmed", LocalDateTime.now(), customer4);
+		OrderVO order5 = new OrderVO(3, "confirmed", LocalDateTime.now(), customer4);
+		
+		
+		order5.setCustomer(customer4);
+		
+		System.out.println("----- null:");
+		System.out.println(order4.getCustomer());
+		System.out.println("-------");
+		System.out.println(customer4.getOrder());
 	}
 }
 

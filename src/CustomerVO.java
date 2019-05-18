@@ -156,10 +156,21 @@ public class CustomerVO extends PersonVO {
 	}
 
 	public void setOrder(OrderVO order) {
-//		if (this.order != null) {
-//			this.order.setCustomer(null);
+//		if (order == null) {
+//			this.unsetOrder();
+//		} else {
+//			CustomerVO c = order.getCustomer();
+//			if (c != this && c != null) {
+//				c.unsetOrder();
+//				this.order = order;
+//				this.order.setCustomer(this);
+//			}
 //		}
 		this.order = order;
+	}
+
+	public void unsetOrder() {
+		this.order = null;
 	}
 
 	public boolean hasOrder() {

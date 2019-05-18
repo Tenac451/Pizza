@@ -179,18 +179,21 @@ public class OrderVO {
 	}
 
 	public void setCustomer(CustomerVO customer) {
+//		if (customer == null) {
+//			this.unsetCustomer();
+//		} else {
+//			OrderVO o = customer.getOrder();
+//			if (o != this && o != null) {
+//				o.unsetCustomer();
+//				this.customer = customer;
+//				this.customer.setOrder(this);
+//			}
+//		}
 		this.customer = customer;
-//		#TODO
-//		if (this.customer != null && customer != null) {
-//			// entfernen der Order sollte ein anderer Kunde diese bereits besitzen.
-//			this.customer.setOrder(null);
-//		}
-//		
-//		this.customer = customer;
-//		System.out.println("ohhahahaah");
-//		if (customer != null) {
-//			customer.setOrder(this);
-//		}
+	}
+
+	public void unsetCustomer() {
+		this.customer = null;
 	}
 
 	public String getState() {
