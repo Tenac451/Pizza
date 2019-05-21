@@ -37,8 +37,8 @@ public abstract class EmployeeVO extends PersonVO {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
-			return false;
+//		if (!super.equals(obj))
+//			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		EmployeeVO other = (EmployeeVO) obj;
@@ -47,10 +47,10 @@ public abstract class EmployeeVO extends PersonVO {
 				return false;
 		} else if (!personnelNo.equals(other.personnelNo))
 			return false;
-		if (Float.floatToIntBits(salary) != Float.floatToIntBits(other.salary))
-			return false;
-		if (vacationDays != other.vacationDays)
-			return false;
+//		if (Float.floatToIntBits(salary) != Float.floatToIntBits(other.salary))
+//			return false;
+//		if (vacationDays != other.vacationDays)
+//			return false;
 		return true;
 	}
 

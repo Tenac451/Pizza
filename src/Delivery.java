@@ -16,8 +16,10 @@ public class Delivery implements IService {
 		CustomerVO customer = null;
 		if (order != null) {
 			customer = order.getCustomer();
+		} else {
+			return "No order available.";
 		}
-		
+			
 		if (customer == null) {
 			return String.format(" Service if DeliveryManVO %s: No customer available. ", employee.getFirstName() + " " + employee.getLastName());
 		}
@@ -25,11 +27,15 @@ public class Delivery implements IService {
 			order.setState("delivered");
 			return String.format(" Service if DeliveryManVO %s:  Order is delivered on ", employee.getFirstName() + " " + employee.getLastName());
 		}
-		return String.format(" Service of DeliveryManVO %s: No order for processing available. ", employee.getFirstName() + " " + employee.getLastName());
+		return String.format(" Service of DeliveryManVO %s: No order is ready for processing. available. ", employee.getFirstName() + " " + employee.getLastName());
 	}
 
 	private EmployeeVO selectEmployee() {
 		Random zufall = new Random();
 		return employees[zufall.nextInt(2)];
+	}
+	
+	public EmployeeVO[] getEmployees() {
+		return employees;
 	}
 }

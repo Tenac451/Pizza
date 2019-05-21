@@ -5,6 +5,8 @@ public interface IOrdering {
 	public abstract void addDish(DishVO dish);
 
 	public abstract void deleteDish(DishVO dish);
+	
+	public abstract void deleteDish();
 
 	public abstract float calculateTotalPrice();
 

@@ -69,7 +69,10 @@ public class OrderVO {
 		}
 		return null;
 	}
-
+	
+	public int getNumberOfDishes() {
+		return getNumerOfDishes();
+	}
 	public int getNumerOfDishes() {
 		return this.index;
 	}
@@ -169,7 +172,11 @@ public class OrderVO {
 	public LocalDateTime getTimestampDeliverdOrder() {
 		return timestampDeliverdOrder;
 	}
-
+	
+	public void setTimestampDeliveredOrder(LocalDateTime timestampDeliverdOrder) {
+		this.timestampDeliverdOrder = timestampDeliverdOrder;
+	}
+	
 	public void setTimestampDeliverdOrder(LocalDateTime timestampDeliverdOrder) {
 		this.timestampDeliverdOrder = timestampDeliverdOrder;
 	}
@@ -203,5 +210,15 @@ public class OrderVO {
 	public void setState(String state) {
 		this.state = state;
 	}
-
+	
+	public static int getMAX_DISHES() {
+		return OrderVO.MAX_DISHES;
+		
+	}
+	public void setShoppingBasket( DishVO[] shoppingBasket) {
+		this.shoppingBasket = shoppingBasket;
+	}
+	public DishVO[] getShoppingBasket( ) {
+		return this.shoppingBasket;
+	}
 }

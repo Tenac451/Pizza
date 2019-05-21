@@ -73,23 +73,23 @@ public abstract class PersonVO {
 		if (getClass() != obj.getClass())
 			return false;
 		PersonVO other = (PersonVO) obj;
-		if (firstName == null) {
-			if (other.firstName != null)
-				return false;
-		} else if (!firstName.equals(other.firstName))
-			return false;
-		if (houseNumber != other.houseNumber)
-			return false;
-		if (lastName == null) {
-			if (other.lastName != null)
-				return false;
-		} else if (!lastName.equals(other.lastName))
-			return false;
-		if (street == null) {
-			if (other.street != null)
-				return false;
-		} else if (!street.equals(other.street))
-			return false;
+//		if (firstName == null) {
+//			if (other.firstName != null)
+//				return false;
+//		} else if (!firstName.equals(other.firstName))
+//			return false;
+//		if (houseNumber != other.houseNumber)
+//			return false;
+//		if (lastName == null) {
+//			if (other.lastName != null)
+//				return false;
+//		} else if (!lastName.equals(other.lastName))
+//			return false;
+//		if (street == null) {
+//			if (other.street != null)
+//				return false;
+//		} else if (!street.equals(other.street))
+//			return false;
 		return true;
 	}
 

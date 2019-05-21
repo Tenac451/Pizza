@@ -7,7 +7,11 @@ public class MenuVO {
 	public MenuVO() {
 		this.initMenuVO();
 	}
-
+	private void initMenu() 
+	{
+		initMenuVO();
+	}
+	
 	private void initMenuVO() {
 
 		this.dishes = new DishVO[NUMBER_OF_DISHES];
@@ -41,8 +45,8 @@ public class MenuVO {
 		}
 		return null;
 	}
-
-	public int getNumberOfDishes() {
+	
+	public static int getNumberOfDishes() {
 		return MenuVO.NUMBER_OF_DISHES;
 	}
 

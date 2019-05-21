@@ -4,7 +4,7 @@ public class Kitchen implements IService {
 
 	public Kitchen() {
 		employees = new EmployeeVO[1];
-		employees[0] = new ChefVO();
+		employees[0] = new ChefVO("123", "Jan", "Ich");
 	}
 
 	@Override
@@ -14,9 +14,11 @@ public class Kitchen implements IService {
 		}
 		if ("confirmed".equals(order.getState())) {
 			order.setState("ready");
-			return String.format(" Service if ChefVO %s: Order is ready ", employees[0].getFirstName() + " " + employees[0].getLastName());
+			return String.format(" Service of ChefVO %s: Order is ready. ", employees[0].getFirstName() + " " + employees[0].getLastName() + employees[0].getPersonnelNo());
 		}
 		return String.format("Serivce of ChefVO %s: No order for processing available. ", employees[0].getFirstName() + " " + employees[0].getLastName() );
 	}
-
+	public EmployeeVO[] getEmployees() {
+		return employees;
+	}
 }

@@ -96,7 +96,11 @@ abstract class DishVO {
 //		return new Object();
 //	}
 	public String ingredientsToString() {
-		return String.join(",", this.ingredients);
+		if(this.ingredients != null) {
+			return String.join(", ", this.ingredients);
+		}
+		return "";
+		
 	}
 
 	@Override

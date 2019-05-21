@@ -36,6 +36,7 @@ public class Ordering implements IOrdering {
 			Ordering.nextId = LocalDateTime.now().getYear() * 100000;
 		}
 
+		Ordering.nextId++;
 		// eine neue bestellerung erzeugt und currentOrder zugewiesen.
 		currentOrder = new OrderVO(Ordering.getNextId(), "started", LocalDateTime.now(), customer);
 
@@ -47,7 +48,7 @@ public class Ordering implements IOrdering {
 
 	public void addDish(DishVO dish) {
 		if (currentOrder == null) {
-			System.out.println("Error: There is no order");
+			System.out.println("Error: There is no order.");
 		} else {
 			if ("started".equals(currentOrder.getState())) {
 				currentOrder.addDish(dish);
@@ -56,7 +57,19 @@ public class Ordering implements IOrdering {
 			}
 		}
 	}
-
+	@Override
+	public void deleteDish() {
+		if (currentOrder == null) {
+			System.out.println("Error: There is no order.");
+		} else {
+			if ("started".equals(currentOrder.getState())) {
+				currentOrder.deleteDish();
+			} else {
+				System.out.println("Your order is complete, you can not delete any dishes. ");
+			}
+		}
+	}
+	
 	@Override
 	public void deleteDish(DishVO dish) {
 		if (currentOrder == null) {
@@ -74,7 +87,7 @@ public class Ordering implements IOrdering {
 	public float calculateTotalPrice() {
 		float price = 0.0f;
 		if (currentOrder == null) {
-			System.out.println("Error: There is no order");
+			System.out.println("Error: There is no order.");
 		} else {
 			price = currentOrder.calculatePriceDishes();
 		}
@@ -84,7 +97,7 @@ public class Ordering implements IOrdering {
 	@Override
 	public void confirmOrder() {
 		if (currentOrder == null) {
-			System.out.println("Error: There is no order");
+			System.out.println("Error: There is no order.");
 		} else {
 			if ("started".equals(currentOrder.getState())) {
 				currentOrder.setState("confirmed");
@@ -103,13 +116,13 @@ public class Ordering implements IOrdering {
 			switch (currentOrder.getState()) {
 			case "started":
 				System.out.println(" Your order can not be processed. ");
-				break;
+				
 			case "confirmed":
 				System.out.println(kitchen.startService(currentOrder));
-				break;
+				
 			case "ready":
 				System.out.println(delivery.startService(currentOrder));
-				break;
+				
 			case "deliverd":
 				currentOrder.setTimestampDeliverdOrder(LocalDateTime.now());
 				currentOrder.setState("finished");
@@ -160,8 +173,10 @@ public class Ordering implements IOrdering {
 	}
 
 	public static int getNextId() {
-		Ordering.nextId = Ordering.nextId + 1;
-		return nextId;
+//		int id = Ordering.nextId;
+//		Ordering.nextId = Ordering.nextId + 1; 
+//		return id;
+		return Ordering.nextId;
 	}
 
 }
