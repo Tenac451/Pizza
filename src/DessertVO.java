@@ -1,28 +1,64 @@
 
-public class DessertVO extends DishVO {
 
+/**
+ *  
+ * @author Robert Fischer, Gabriele Schmidt
+ * @version 0.1
+ * @since 27.05.2013
+ *
+ */
+public class DessertVO extends DishVO {
+	
+	/**
+	 * Initialisierungkonstruktor
+	 * Initialisiert die Werte der Instanzattribute, ruft Konstruktor der Oberklasse auf.
+	 *  
+	 * @param number - Nummer des Dessert
+	 * @param name - Name des Dessert
+	 * @param price - Preis des Dessert
+	 * 
+	 */
 	public DessertVO(int number, String name, float price) {
 		super(number, name, price);
 	}
-
+	
+	/**
+	 * Defaultkonstruktor 
+	 * Ruft den Initialisierungskonstruktor auf, um Standardwerte f�r Instanzattribute zu setzen.
+	 * 
+	 */
 	public DessertVO() {
-		super();
+		this(0, "DummyDessert", 0.00f);
 	}
+	
+	
+	
+//	public String toString() {
+//		
+//		StringBuffer sb = new StringBuffer(); // R�ckgabewert ...
+//		sb.append("Dessert: " );
+//		sb.append(super.toString());
+//		
+//		return sb.toString();
+//	}
 
-	@Override
-	public Object clone() {
-		DessertVO cloneObj = new DessertVO(this.getNumber(), this.getName(), this.getPrice());
-		return cloneObj;
+	/**
+	 * see exercise later
+	 * 
+	 */
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
 	}
 
 	@Override
 	public String getNameOfDish() {
-		return this.getName();
+		return this.name;
 	}
 
 	@Override
 	public int getNumberOfDish() {
-		return this.getNumber();
+		return this.number;
 	}
+		
 
-}
+} // Ende Klasse

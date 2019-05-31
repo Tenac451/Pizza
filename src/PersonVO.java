@@ -1,26 +1,34 @@
 
-public abstract class PersonVO {
+/**
+ * PersonVO is teh superclass containing basic attributes
+ * 
+ * @author Gabrile Schmidt
+ *  * @version 1.0
+ * @since 27.05.2018
+ *
+ */
 
+abstract class PersonVO {
 	protected String lastName;
 	protected String firstName;
 	protected String street;
 	protected int houseNumber;
-
+	
 	public PersonVO(String lastName, String firstName, String street, int houseNumber) {
-		this.setFirstName(firstName);
-		this.setLastName(lastName);
-		this.setStreet(street);
-		this.setHouseNumber(houseNumber);
+		setLastName(lastName);
+		setFirstName(firstName);
+		setStreet(street);
+		setHouseNumber(houseNumber);
 	}
-
-	public PersonVO(String lastName, String firstName) {
+	
+	public PersonVO(String lastName, String firstName){
 		this(lastName, firstName, null, 0);
 	}
-
+	
 	public PersonVO() {
 		this(null, null);
 	}
-
+	
 	public String getLastName() {
 		return lastName;
 	}
@@ -36,67 +44,65 @@ public abstract class PersonVO {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-
+	
 	public String getStreet() {
 		return street;
 	}
-
+	
 	public void setStreet(String street) {
 		this.street = street;
 	}
-
+	
 	public int getHouseNumber() {
 		return houseNumber;
 	}
-
+	
 	public void setHouseNumber(int houseNumber) {
 		this.houseNumber = houseNumber;
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + houseNumber;
-		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result + ((street == null) ? 0 : street.hashCode());
-		return result;
-	}
-
-	@Override
+	
 	public boolean equals(Object obj) {
+		boolean isEqual = false;
+		
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PersonVO other = (PersonVO) obj;
-//		if (firstName == null) {
-//			if (other.firstName != null)
-//				return false;
-//		} else if (!firstName.equals(other.firstName))
-//			return false;
-//		if (houseNumber != other.houseNumber)
-//			return false;
-//		if (lastName == null) {
-//			if (other.lastName != null)
-//				return false;
-//		} else if (!lastName.equals(other.lastName))
-//			return false;
-//		if (street == null) {
-//			if (other.street != null)
-//				return false;
-//		} else if (!street.equals(other.street))
-//			return false;
-		return true;
+		
+		if (this.getClass() == obj.getClass()){
+			PersonVO other = (PersonVO) obj;
+			isEqual = (	other.getFirstName().equals(firstName) && 
+						other.getLastName().equals(lastName) &&
+						other.getStreet().equals(street) &&
+						other.getHouseNumber() == houseNumber);
+		}
+		
+		return isEqual;
 	}
+	
+	public int hashCode() {
+		int hc = 0;
+		final int hashMultiplier = 59;
+		
+		if (firstName != null) {
+			hc = firstName.hashCode();
+		}
+		if (lastName != null) {
+			hc = hc * hashMultiplier + lastName.hashCode();
+		}
+		
+		if (street != null) {
+			hc = hc * hashMultiplier + street.hashCode();
+		}
 
-	@Override
-	public String toString() {
-		return "Name: " + this.getFirstName() + " " + this.getLastName() + "\n" + "Straße: " + this.getStreet() + " "
-				+ this.getHouseNumber() + "\n";
+		hc = hc * hashMultiplier + houseNumber;
+		
+		return hc;
 	}
-
+	
+	public String toString(){
+		return String.format("Name: %s %s\n\tStreet: %s %d\n", firstName, lastName, street,houseNumber);
+	}
 }

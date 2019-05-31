@@ -1,32 +1,56 @@
 import java.awt.Color;
 
 /**
- * 
- * @author Jan M�nchberger
+ * ChefVO represents the objects of chef 
+ * @author Robert Fischer, Gabriele Schmidt
+ * @version 2.0
  *
  */
-
-public class ChefVO extends EmployeeVO {
-
+public class ChefVO extends EmployeeVO{
 	private Color colorApron;
-
+	
+	
 	public ChefVO(String personnelNo, String lastName, String firstName) {
 		super(personnelNo, lastName, firstName);
-		this.setColorApron(Color.BLUE);
+		colorApron = Color.WHITE;
+		vacationDays = 25;
+		salary = 2100;
 	}
-
-	public ChefVO(String lastName, String firstName, Color colorApron) {
-		this(null, lastName, firstName);
-		this.setColorApron(colorApron);
-	}
-
+	
+	/**
+	 * default constructor 
+	 * calls initializing constructor with default values for instance attributes
+	 * 
+	 */
 	public ChefVO() {
-		this("Bocuse", "Bruno", Color.BLUE);
+		this(null, null, null);
+	}
+	
+	
+	//Standard methode of Java
+	
+	
+	
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		
+		sb.append("\nChef:\n" );
+		
+		sb.append(super.toString());
+		
+		sb.append("\nApron " + colorApron.toString());
+		
+		return sb.toString();
 	}
 
-	public String toString() {
-		return "Chef :\nChef_" + super.toString() + "" + "Apron:" + this.getColorApron() + "\n";
-	}
+	/// 
+	/// Setter und Getter
+	///
 
 	public Color getColorApron() {
 		return colorApron;
@@ -36,4 +60,7 @@ public class ChefVO extends EmployeeVO {
 		this.colorApron = colorApron;
 	}
 
-}
+	
+
+	
+} // End  of class

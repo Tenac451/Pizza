@@ -1,20 +1,66 @@
 
+/**
+ * EmployeeVO represents an object of employee 
+ * 
+ */
 public abstract class EmployeeVO extends PersonVO {
 	protected String personnelNo;
 	protected float salary;
 	protected int vacationDays;
-
-	public EmployeeVO(String personnenlNo, String lastName, String firstName) {
-		super(lastName, firstName, null, 0);
-		this.personnelNo = personnenlNo;
-		this.salary = 1200.5f;
-		this.vacationDays = 26;
+	
+	
+	public EmployeeVO(String personnelNo, String lastName, String firstName) {
+		super(lastName, firstName);
+		setPersonnelNo(personnelNo);
 	}
 
+	
 	public EmployeeVO() {
 		this(null, null, null);
 	}
 
+	
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+
+		sb.append(getPersonnelNo() + " ");
+
+		sb.append(super.toString());
+
+		sb.append("\tSalary: " + getSalary() + "\n");
+		sb.append("\tNumber of vacation days: " + getVacationDays());
+
+		return sb.toString();
+	}
+
+
+
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		EmployeeVO other = (EmployeeVO) obj;
+		if (!personnelNo.equals(other.getPersonnelNo())) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public int hashCode() {
+		return personnelNo.hashCode();
+	}
+
+	//
+	// Setter und Getter
+	//
+	
 	public String getPersonnelNo() {
 		return personnelNo;
 	}
@@ -23,41 +69,19 @@ public abstract class EmployeeVO extends PersonVO {
 		this.personnelNo = personnelNo;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((personnelNo == null) ? 0 : personnelNo.hashCode());
-		result = prime * result + Float.floatToIntBits(salary);
-		result = prime * result + vacationDays;
-		return result;
+	public float getSalary() {
+		return salary;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-//		if (!super.equals(obj))
-//			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		EmployeeVO other = (EmployeeVO) obj;
-		if (personnelNo == null) {
-			if (other.personnelNo != null)
-				return false;
-		} else if (!personnelNo.equals(other.personnelNo))
-			return false;
-//		if (Float.floatToIntBits(salary) != Float.floatToIntBits(other.salary))
-//			return false;
-//		if (vacationDays != other.vacationDays)
-//			return false;
-		return true;
+	public void setSalary(float salary) {
+		this.salary = salary;
 	}
 
-	@Override
-	public String toString() {
-		return personnelNo + "  " + super.toString() + "Salary: " + salary + "\nNumber of vacation days: "
-				+ vacationDays + "\n";
+	public int getVacationDays() {
+		return vacationDays;
 	}
 
-}
+	public void setVacationDays(int vacationDays) {
+		this.vacationDays = vacationDays;
+	}
+} 

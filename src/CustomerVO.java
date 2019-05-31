@@ -1,117 +1,169 @@
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
+//import java.time.format.DateTimeFormatter;
 
 /**
- * 
- * @author Jan Münchberger
+ * CustomerVO represents objects of customer.
+ * @author Robert Fischer, Gabriele Schmidt
+ * @version 2.0
  *
  */
-
-public class CustomerVO extends PersonVO {
-
-	private String gender;
-
+public class CustomerVO  extends PersonVO{
+	
 	private static int nextId = 0;
-
 	private int id;
 
-	private OrderVO order; // #TODO Im UML als orderVO beschrieben
-
-	static final String M = "männlich";
-	static final String W = "weiblich";
-	static final String N = "";
-	static final String D = "divers";
-
+	
+	private String gender;
 	private LocalDate dateOfBirth;
-
-	public CustomerVO(String lastName, String firstName, String gender, LocalDate dateOfBirth) {
-		this(lastName, firstName, null, 0, gender, dateOfBirth);
-
-	}
-
-	public CustomerVO(String lastName, String firstName, LocalDate dateOfBirth) {
-		this(lastName, firstName, CustomerVO.N, dateOfBirth);
-	}
-
-	public CustomerVO() {
-		this("Mampf", "Martin", LocalDate.of(1990, 5, 24));
-	}
-
+	
+	private OrderVO order;
+	
+	/**
+	 * initializing constructor
+	 * Initialize all instance attributes with values. 
+	 * 
+	 * @param lastName - Customer's second name
+	 * @param firstName - Customer's first name
+	 * @param street - Customer's street
+	 * @param houseNumber - Customer's house number
+	 * @param gender - Customer's gender
+	 * @param dateOfBirth - Customer's date of birth
+	
+	 */
 	public CustomerVO(String lastName, String firstName, String street, int houseNumber, String gender, LocalDate dob) {
 		super(lastName, firstName, street, houseNumber);
-		this.setDateOfBirth(dob);
-		this.setGender(gender);
-		this.id = CustomerVO.nextId;
-		this.setOrder(null);
-		CustomerVO.nextId = CustomerVO.nextId + 1;
-	}
+		id = nextId;
+		nextId++;
+		setGender(gender);
+		setDateOfBirth(dob);
+		setOrder(order);
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((dateOfBirth == null) ? 0 : dateOfBirth.hashCode());
-		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
-		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-		return result;
 	}
+	
+	
 
-	@Override
+	/**
+	 * initializing constructor
+	 * Initialize all instance attributes with values. 
+	 * 
+	 * @param lastName - Customer's second name
+	 * @param firstName - Customer's first name
+	 * @param dateOfBirth - Customer's date of birth
+	 * 
+	 */
+	public CustomerVO(String lastName, String firstName, LocalDate dob) {
+		this(lastName, firstName, null, 0, null, dob);
+
+	}
+	
+	
+
+	/**
+	 * default constructor 
+	 * calls initializing constructor with default values for instance attributes
+	 * 
+	 */
+	public CustomerVO() {
+		this(null, null, null);
+		
+	}
+	
+	/**
+	 * The customer's age is calculated. There is no instance variable.
+	 * 
+	 * @return age - short
+	 */
+	public short calculateAge() {
+		short alter = -1;
+		Period age;
+		LocalDate today = LocalDate.now();
+
+		if (dateOfBirth != null) {
+			age = Period.between(dateOfBirth, today);
+			alter = (short) age.getYears();
+		}
+		return alter;
+	}
+	
+	/**
+	 * Checks whether there is a current order or not
+	 * 
+	 * @return true => order available, false => there is no order
+	 * 
+	 */
+	public boolean hasOrder() {
+		if (order != null) return true;
+		else return false;
+	}
+	
+	
+	
+
+	// standards Method of Java
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		// if (!(obj instanceof KundeVO))
+		// return false;
+		// instanceof is unknown yet -> inheritance
+		// This is a weak check, sind obj would also be an instance of its superclasses
+		// which doesn't correspnds wit hthe contract of equals:
+		// if x.equals(y) [is true] then (x.hashCode() == y.hashCode()) is true too.
+
+		// better solution
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
+
 		CustomerVO other = (CustomerVO) obj;
-		if (dateOfBirth == null) {
-			if (other.dateOfBirth != null)
-				return false;
-		} else if (!dateOfBirth.equals(other.dateOfBirth))
+		if (id != other.getId()) {
 			return false;
-		if (firstName == null) {
-			if (other.firstName != null)
-				return false;
-		} else if (!firstName.equals(other.firstName))
-			return false;
-		if (gender == null) {
-			if (other.gender != null)
-				return false;
-		} else if (!gender.equals(other.gender))
-			return false;
-		if (lastName == null) {
-			if (other.lastName != null)
-				return false;
-		} else if (!lastName.equals(other.lastName))
-			return false;
+		}
 		return true;
 	}
 
-	private String dobToString() {
-		String result = "";
-		result = this.getDateOfBirth().format(DateTimeFormatter.ofPattern("dd MM yyyy"));
-		return result;
-	}
+	public int hashCode() {
+		int hc = 0;
+		final int hashMultiplier = 59;
+		hc = hashMultiplier * id;
 
-	public short calculateAge() {
-		short age = -1;
-		if (this.dateOfBirth == null) {
-			return (short) -1;
-		}
-		int diff = Period.between(this.getDateOfBirth(), LocalDate.now()).getYears();
-		if (diff < 32767) {
-			age = (short) diff;
-		}
-		return age;
+		return hc;
 	}
 
 	public String toString() {
-		return "ID: " + this.getId() + '\n' + super.toString() + "Alter: " + calculateAge() + " \nBestelltung:"
-				+ this.hasOrder();
+		return String.format("Customer:\n" + "\tId: %d\n" + 
+				"\t%s"
+				+ "\tGender: %s\n" + "\tDate of Birth: %s\n" + "\tAge: %d\n"
+						+ "\thas a current order: %b",
+				this.getId(), super.toString(),
+				this.getGender(), this.getDateOfBirth(),
+				this.calculateAge(),
+				hasOrder());
 	}
+	
+	/**
+	 * Returns the birth date in human-readable form.
+	 * 
+	 * @return - the complete string
+	 *  
+	 */
+//	private String dobToString() {
+//		return dateOfBirth.format(DateTimeFormatter.ofPattern("dd.MMM.yyyy"));
+//	}
+//	
+	
+	//Setter and Getter
+	public static int getNextId() {
+		return nextId;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
 
 	public String getGender() {
 		return gender;
@@ -120,64 +172,32 @@ public class CustomerVO extends PersonVO {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+	
 
 	public LocalDate getDateOfBirth() {
-		if (dateOfBirth != null) {
-			return dateOfBirth;
-		} else {
-			return null;
-		}
-
+		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(LocalDate dateOfBirth) {
-		if (dateOfBirth != null) {
-			int diff = Period.between(dateOfBirth, LocalDate.now()).getYears();
-			if (diff > 17) {
-				this.dateOfBirth = dateOfBirth;
-			} else {
-				this.dateOfBirth = null;
-			}
-		} else {
+	/**
+	 * older than 17 years
+	 * 
+	 * @param dateOfBirth
+	 *        -     java.time.LocalDate
+	 */
+	public void setDateOfBirth(LocalDate dob) {
+		this.dateOfBirth = dob;
+		if (this.calculateAge() < 18)
 			this.dateOfBirth = null;
-		}
 	}
-
-	public int getId() {
-		return id;
-	}
-
-	public static int getNextId() {
-		return nextId;
-	}
-
+	
 	public OrderVO getOrder() {
-		return this.order;
+		return order;
 	}
 
-	public void setOrder(OrderVO order) {
-//		if (order == null) {
-//			this.unsetOrder();
-//		} else {
-//			CustomerVO c = order.getCustomer();
-//			if (c != this && c != null) {
-//				c.unsetOrder();
-//				this.order = order;
-//				this.order.setCustomer(this);
-//			}
-//		}
-		this.order = order;
+	public void setOrder(OrderVO orderVO) {
+		this.order = orderVO;
 	}
+	
 
-	public void unsetOrder() {
-		this.order = null;
-	}
-
-	public boolean hasOrder() {
-		if (this.getOrder() != null) {
-			return true;
-		}
-		return false;
-	}
-
-}
+	
+} // end of class

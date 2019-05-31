@@ -1,6 +1,5 @@
 
 public interface IService {
-
-	public abstract String startService(OrderVO order);
+	public String startService(OrderVO order);
 
 }

@@ -1,96 +1,83 @@
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * @author schmidt
+ *
+ */
 public class Ordering implements IOrdering {
+
 	private static MenuVO menu;
-	private static int nextId = 0;
+
 	private OrderVO currentOrder;
 	private CustomerVO currentCustomer;
 	private IService kitchen;
 	private IService delivery;
 
+	private static int nextId = 0;
+
 	public Ordering() {
-		menu = new MenuVO();
+
+		if (menu == null)
+			menu = new MenuVO();
+
 		currentOrder = null;
 		currentCustomer = null;
 		kitchen = new Kitchen();
 		delivery = new Delivery();
+
 	}
 
+	@Override
 	public OrderVO startNewOrder(CustomerVO customer) {
-
-		// sicherstellen das menu initialisiert ist
-		if (menu == null) {
+		if (menu == null)
 			menu = new MenuVO();
+
+		if (customer != null) {
+			if (nextId == 0 || nextId / 100000 < LocalDate.now().getYear()) {
+				nextId = (LocalDate.now().getYear() * 100000) + 1;
+			} else
+				nextId++;
+			currentOrder = new OrderVO(nextId, "started", LocalDateTime.now(), customer);
+			currentCustomer = customer;
+			currentCustomer.setOrder(currentOrder);
 		}
-
-		// ist customer null, wird kein Objekt OrderVO erstellt, es wird Null Zur�ck
-		// gegeben
-		if (customer == null) {
-			return null;
-		}
-
-		// wird das Obejekt currentCustoemr Zugewiesen
-		currentCustomer = customer;
-		// wird die neue Bestellnummer berechnet
-		if ((Ordering.getNextId() == 0) || ((LocalDateTime.now().getYear() * 100000 > Ordering.getNextId()))) {
-			Ordering.nextId = LocalDateTime.now().getYear() * 100000;
-		}
-
-		Ordering.nextId++;
-		// eine neue bestellerung erzeugt und currentOrder zugewiesen.
-		currentOrder = new OrderVO(Ordering.getNextId(), "started", LocalDateTime.now(), customer);
-
-		// die neue Bestellung beim Kunden gesetzt und zur�ck gegeben.
-		currentCustomer.setOrder(currentOrder);
-
 		return currentOrder;
 	}
 
+	@Override
 	public void addDish(DishVO dish) {
 		if (currentOrder == null) {
 			System.out.println("Error: There is no order.");
-		} else {
-			if ("started".equals(currentOrder.getState())) {
-				currentOrder.addDish(dish);
-			} else {
-				System.out.println("Your order is complete, you can not add any dishes. ");
-			}
+		}
+		if (currentOrder != null && currentOrder.getState().equals("started"))
+			currentOrder.addDish(dish);
+		if (currentOrder != null && !currentOrder.getState().equals("started")) {
+			System.out.println("Your order is complete, you can not add any dishes.");
 		}
 	}
+
 	@Override
 	public void deleteDish() {
 		if (currentOrder == null) {
 			System.out.println("Error: There is no order.");
-		} else {
-			if ("started".equals(currentOrder.getState())) {
-				currentOrder.deleteDish();
-			} else {
-				System.out.println("Your order is complete, you can not delete any dishes. ");
-			}
 		}
-	}
-	
-	@Override
-	public void deleteDish(DishVO dish) {
-		if (currentOrder == null) {
-			System.out.println("Error: There is no order");
-		} else {
-			if ("started".equals(currentOrder.getState())) {
-				currentOrder.deleteDish(dish);
-			} else {
-				System.out.println("Your order is complete, you can not delete any dishes. ");
-			}
+		if (currentOrder != null && currentOrder.getState().equals("started"))
+			currentOrder.deleteDish();
+
+		if (currentOrder != null && !currentOrder.getState().equals("started")) {
+			System.out.println("Your order is complete, you can not delete any dishes.");
 		}
 	}
 
 	@Override
 	public float calculateTotalPrice() {
-		float price = 0.0f;
+		float price = 0f;
 		if (currentOrder == null) {
 			System.out.println("Error: There is no order.");
-		} else {
-			price = currentOrder.calculatePriceDishes();
 		}
+		if (currentOrder != null)
+			price = currentOrder.calculatePriceDishes();
 		return price;
 	}
 
@@ -98,85 +85,113 @@ public class Ordering implements IOrdering {
 	public void confirmOrder() {
 		if (currentOrder == null) {
 			System.out.println("Error: There is no order.");
+		}
+		if (currentOrder != null && currentOrder.getState().equals("started")) {
+			currentOrder.setState("confirmed");
+			startService();
 		} else {
-			if ("started".equals(currentOrder.getState())) {
-				currentOrder.setState("confirmed");
-				this.startService();
-			} else {
-				System.out.println("Your order can not be confrmed. ");
-			}
+			System.out.println("Your order can not be confirmed.");
 		}
 
 	}
 
 	public void startService() {
 		if (currentOrder == null) {
-			System.out.println(" Error: There is no order. ");
-		} else {
-			switch (currentOrder.getState()) {
-			case "started":
-				System.out.println(" Your order can not be processed. ");
-				
-			case "confirmed":
-				System.out.println(kitchen.startService(currentOrder));
-				
-			case "ready":
-				System.out.println(delivery.startService(currentOrder));
-				
-			case "deliverd":
-				currentOrder.setTimestampDeliverdOrder(LocalDateTime.now());
-				currentOrder.setState("finished");
-				System.out.println("Order Complete: ");
-				System.out.println(currentOrder);
-				currentCustomer.setOrder(null);
-				break;
-			default:
-				break;
-			}
+			System.out.println("Error: There is no order.");
 		}
+
+		if (currentOrder != null && currentOrder.getState().equals("started")) {
+			System.out.println("Your order can not be processed.");
+		}
+
+		if (currentOrder != null && currentOrder.getState().equals("confirmed")) {
+			String s = kitchen.startService(currentOrder);
+			System.out.println(s);
+		}
+
+		if (currentOrder != null && currentOrder.getState().equals("ready")) {
+			String s = delivery.startService(currentOrder);
+			System.out.println(s);
+		}
+
+		if (currentOrder != null && currentOrder.getState().equals("delivered")) {
+			currentOrder.setTimestampDeliveredOrder(LocalDateTime.now());
+			currentOrder.setState("finished");
+			System.out.println("\nOrder completed: " + currentOrder.toString());
+			currentCustomer.setOrder(null);
+
+		}
+
 	}
 
+	/**
+	 * @return the currentOrder
+	 */
 	public OrderVO getCurrentOrder() {
 		return currentOrder;
 	}
 
+	/**
+	 * @param currentOrder the currentOrder to set
+	 */
 	public void setCurrentOrder(OrderVO currentOrder) {
 		this.currentOrder = currentOrder;
 	}
 
+	/**
+	 * @return the currentCustomer
+	 */
 	public CustomerVO getCurrentCustomer() {
 		return currentCustomer;
 	}
 
-	public void setCurrentCustomer(CustomerVO currentCustomer) {
-		this.currentCustomer = currentCustomer;
+	/**
+	 * @param currentCustomer the currentCustomer to set
+	 */
+	public void setCurrentCustomer(CustomerVO currentCusomer) {
+		this.currentCustomer = currentCusomer;
 	}
 
-	public IService getKitchen() {
-		return kitchen;
-	}
-
-	public void setKitchen(IService kitchen) {
-		this.kitchen = kitchen;
-	}
-
-	public IService getDelivery() {
-		return delivery;
-	}
-
-	public void setDelivery(IService delivery) {
-		this.delivery = delivery;
-	}
-
+	/**
+	 * @return the meno
+	 */
 	public static MenuVO getMenu() {
 		return menu;
 	}
 
+	/**
+	 * @return the kitchen
+	 */
+	public IService getKitchen() {
+		return kitchen;
+	}
+
+	/**
+	 * @param kitchen the kitchen to set
+	 */
+	public void setKitchen(IService kitchen) {
+		this.kitchen = kitchen;
+	}
+
+	/**
+	 * @return the delivery
+	 */
+	public IService getDelivery() {
+		return delivery;
+	}
+
+	/**
+	 * @param delivery the delivery to set
+	 */
+	public void setDelivery(IService delivery) {
+		this.delivery = delivery;
+	}
+
+	/**
+	 * @return the nextId
+	 */
 	public static int getNextId() {
-//		int id = Ordering.nextId;
-//		Ordering.nextId = Ordering.nextId + 1; 
-//		return id;
-		return Ordering.nextId;
+		return nextId;
 	}
 
 }

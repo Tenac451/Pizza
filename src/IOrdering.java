@@ -1,14 +1,16 @@
 
 public interface IOrdering {
-	public abstract OrderVO startNewOrder(CustomerVO customer);
-
-	public abstract void addDish(DishVO dish);
-
-	public abstract void deleteDish(DishVO dish);
 	
-	public abstract void deleteDish();
+	public OrderVO startNewOrder(CustomerVO customer);
+	
+	public void addDish(DishVO dish) ;
+	
+	
+	public void deleteDish() ;
+	
+	
+	public float calculateTotalPrice() ;
+	
+	public void confirmOrder() ;
 
-	public abstract float calculateTotalPrice();
-
-	public abstract void confirmOrder();
 }
