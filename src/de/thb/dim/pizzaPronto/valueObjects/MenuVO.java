@@ -11,6 +11,7 @@ public class MenuVO {
 	 * 
 	 */
 	public MenuVO() {
+		dishes = new ArrayList<DishVO>();
 		initMenu();
 	}
 

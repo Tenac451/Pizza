@@ -1,6 +1,9 @@
 package de.thb.dim.pizzaPronto.businessObjects;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import de.thb.dim.pizzaPronto.valueObjects.CustomerVO;
 import de.thb.dim.pizzaPronto.valueObjects.DishVO;
@@ -200,5 +203,31 @@ public class Ordering implements IOrdering {
 	public static int getNextId() {
 		return nextId;
 	}
+
+	@Override
+	public List<DishVO> sortShoppingBasket() {
+		Collections.sort(this.currentOrder.getShoppingBasket());
+		return this.currentOrder.getShoppingBasket();
+	}
+
+	@Override
+	public List<DishVO> sortShoppingBasketByNumber() {
+		Comparator<DishVO> c = new Comparator<DishVO> () {
+			public int compare(DishVO o1, DishVO o2) {
+				Integer a = o1.getNumberOfDish();
+				Integer b = o2.getNumberOfDish();
+				return a.compareTo(b);
+			}
+		};
+		Collections.sort(this.currentOrder.getShoppingBasket(), c);
+		return this.currentOrder.getShoppingBasket();
+	}
+
+	@Override
+	public List<DishVO> sortShoppingBasketByPrice() {
+		Collections.sort(this.currentOrder.getShoppingBasket(), Comparator.comparing(e -> e.getPrice()));
+		return this.currentOrder.getShoppingBasket();
+	}
+
 
 }

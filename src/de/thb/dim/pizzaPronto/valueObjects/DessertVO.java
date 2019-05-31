@@ -60,6 +60,7 @@ public class DessertVO extends DishVO {
 	public int getNumberOfDish() {
 		return this.number;
 	}
+
 		
 
 } // Ende Klasse

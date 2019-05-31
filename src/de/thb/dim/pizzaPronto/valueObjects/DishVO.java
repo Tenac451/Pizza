@@ -3,7 +3,7 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 
 
-public abstract class DishVO {
+public abstract class DishVO implements Comparable<DishVO>{
 	protected int number;
 	protected String name;
 	protected String[] ingredients;
@@ -150,5 +150,12 @@ public abstract class DishVO {
 	 * @return - number of the dish
 	 */
 	public abstract int getNumberOfDish();
+	
+	public int getNumberofDish() {
+		return getNumberOfDish();
+	}
+	public int compareTo(DishVO o) {
+		return this.getNameOfDish().compareTo(o.getNameOfDish());
+	}
 
 } 

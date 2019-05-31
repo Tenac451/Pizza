@@ -1,6 +1,7 @@
 package de.thb.dim.pizzaPronto.valueObjects;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
+import java.util.List;
 
 
 /**
@@ -18,7 +19,7 @@ public class OrderVO {
 	private StateOfOrderVO state;
 	private LocalDateTime  timestampStartedOrder;
 	private LocalDateTime  timestampDeliveredOrder;
-	private LinkedList<DishVO> shoppingBasket;
+	private List<DishVO> shoppingBasket;
 	private CustomerVO customer;
 
 	public OrderVO(int orderNo, StateOfOrderVO state, LocalDateTime timestampStartedOrder, CustomerVO customer) {
@@ -27,6 +28,7 @@ public class OrderVO {
 		this.setTimestampStartedOrder(timestampStartedOrder);
 		this.setCustomer(customer);
 		this.setState(state);
+		this.shoppingBasket = new LinkedList<DishVO>();
 		
 	}
 
@@ -97,12 +99,12 @@ public class OrderVO {
 
 	
 	//Setter und Getter
-	public LinkedList<DishVO> getShoppingBasket() {
+	public List<DishVO> getShoppingBasket() {
 		return shoppingBasket;
 	}
 
 	
-	public void setShoppingBasket(LinkedList<DishVO> warenkorb) {
+	public void setShoppingBasket(List<DishVO> warenkorb) {
 		this.shoppingBasket = warenkorb;
 	}
 
