@@ -2,12 +2,14 @@ package de.thb.dim.pizzaPronto.businessObjects;
 
 import java.time.LocalDateTime;
 
+import de.thb.dim.pizzaPronto.businessObjects.exceptions.NoCustomerException;
 import de.thb.dim.pizzaPronto.valueObjects.CustomerVO;
 import de.thb.dim.pizzaPronto.valueObjects.DeliveryManVO;
 import de.thb.dim.pizzaPronto.valueObjects.EmployeeVO;
 import de.thb.dim.pizzaPronto.valueObjects.OrderVO;
 import de.thb.dim.pizzaPronto.valueObjects.StateOfOrderVO;
 
+import java.util.Objects;
 import java.util.Random;
 
 public class Delivery implements IService {
@@ -23,21 +25,24 @@ public class Delivery implements IService {
 	}
 
 	@Override
-	public String startService(OrderVO order) {
+	public String startService(OrderVO order) throws NoCustomerException {
 		String s = "";
 		CustomerVO currentCustomer;
 		EmployeeVO employee = selectEmployee();
 
 		if (order == null) {
-			s = String.format("\nService of DeliveryManVO %s: No order available.",
-					employee.getPersonnelNo());
+			// System.err.println("No order available.");
+			// s = String.format("\nService of DeliveryManVO %s: No order available.",
+			// employee.getPersonnelNo());
+			Objects.requireNonNull(order, "No order available.");
 		} else {
 
 			currentCustomer = order.getCustomer();
 
 			if (currentCustomer == null) {
-				s = String.format("\nService of DeliveryManVO %s: No customer available.",
-						employee.getPersonnelNo());
+				throw new NoCustomerException("No customer available.");
+//				s = String.format("\nService of DeliveryManVO %s: No customer available.",
+//						employee.getPersonnelNo());
 			} else {
 				if (order.getState().equals(StateOfOrderVO.READY)) {
 
@@ -46,17 +51,15 @@ public class Delivery implements IService {
 					s += String.format("\nDrive to customer  %s %s, in %s %s\n", currentCustomer.getLastName(),
 							currentCustomer.getFirstName(), currentCustomer.getStreet(),
 							currentCustomer.getHouseNumber());
-					s += String.format(
-							"\nService of DeliveryManVO %s: ",
-							employee.getPersonnelNo());
-					s += String.format(
-							"Order is delivered on %1$tm/%1$td/%1$tY at %1$tH:%1$tM o'clock",
-							 LocalDateTime.now());
+					s += String.format("\nService of DeliveryManVO %s: ", employee.getPersonnelNo());
+					s += String.format("Order is delivered on %1$tm/%1$td/%1$tY at %1$tH:%1$tM o'clock",
+							LocalDateTime.now());
 
-				}
-				else {
-					s = String.format("\nService of DeliveryManVO %s: No order is ready for processing.",
-							employee.getPersonnelNo());
+				} else {
+					throw new IllegalStateException(" No order is ready for processing.");
+//					System.err.println(" No order is ready for processing.");
+//					s = String.format("\nService of DeliveryManVO %s: No order is ready for processing.",
+//							employee.getPersonnelNo());
 				}
 			}
 		}
@@ -83,7 +86,5 @@ public class Delivery implements IService {
 	public void setEmployees(EmployeeVO[] employees) {
 		this.employees = employees;
 	}
-	
-	
 
 }

@@ -206,6 +206,7 @@ public class OrderVO {
 	 * @param state the state to set
 	 */
 	public void setState(StateOfOrderVO state) {
+		
 		this.state = state;
 	}	
 

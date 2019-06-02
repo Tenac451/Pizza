@@ -1,10 +1,14 @@
 package de.thb.dim.pizzaPronto.businessObjects;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
+import de.thb.dim.pizzaPronto.businessObjects.exceptions.NoCustomerException;
+import de.thb.dim.pizzaPronto.businessObjects.exceptions.NoOrderException;
 import de.thb.dim.pizzaPronto.valueObjects.CustomerVO;
 import de.thb.dim.pizzaPronto.valueObjects.DishVO;
 import de.thb.dim.pizzaPronto.valueObjects.MenuVO;
@@ -48,36 +52,39 @@ public class Ordering implements IOrdering {
 				nextId = (LocalDate.now().getYear() * 100000) + 1;
 			} else
 				nextId++;
-			currentOrder = new OrderVO(nextId, StateOfOrderVO.STARTED , LocalDateTime.now(), customer);
+			currentOrder = new OrderVO(nextId, StateOfOrderVO.STARTED, LocalDateTime.now(), customer);
 			currentCustomer = customer;
 			currentCustomer.setOrder(currentOrder);
+		} else {
+			throw new NullPointerException(" Customer must not be null");
 		}
 		return currentOrder;
 	}
 
 	@Override
-	public void addDish(DishVO dish) {
+	public void addDish(DishVO dish) throws NoOrderException, IllegalStateException {
 		if (currentOrder == null) {
-			System.out.println("Error: There is no order.");
+			throw new NoOrderException(" There is no order.");
 		}
-		if (currentOrder != null && currentOrder.getState().equals(StateOfOrderVO.STARTED))
+		if (currentOrder.getState().equals(StateOfOrderVO.STARTED)) {
 			currentOrder.addDish(dish);
-		if (currentOrder != null && !currentOrder.getState().equals(StateOfOrderVO.STARTED)) {
-			System.out.println("Your order is complete, you can not add any dishes.");
+		} else {
+			throw new IllegalStateException("Your order is complete, you can not add any dishes.");
 		}
 	}
 
 	@Override
-	public void deleteDish(DishVO dish) {
+	public void deleteDish(DishVO dish) throws NoOrderException {
+		Objects.requireNonNull(dish, "Error: There is no order.");
 		if (currentOrder == null) {
-			System.out.println("Error: There is no order.");
+			throw new NoOrderException(" There is no order.");
 		}
-		if (currentOrder != null && currentOrder.getState().equals(StateOfOrderVO.STARTED))
+		if (currentOrder.getState().equals(StateOfOrderVO.STARTED)) {
 			currentOrder.deleteDish(dish);
-
-		if (currentOrder != null && !currentOrder.getState().equals(StateOfOrderVO.STARTED)) {
-			System.out.println("Your order is complete, you can not delete any dishes.");
+		} else {
+			throw new IllegalStateException("Your order is complete, you can not add any dishes.");
 		}
+
 	}
 
 	@Override
@@ -92,39 +99,43 @@ public class Ordering implements IOrdering {
 	}
 
 	@Override
-	public void confirmOrder() {
+	public void confirmOrder() throws NoCustomerException, NoOrderException {
 		if (currentOrder == null) {
-			System.out.println("Error: There is no order.");
+			throw new NoOrderException("There is no order.");
 		}
-		if (currentOrder != null && currentOrder.getState().equals(StateOfOrderVO.STARTED)) {
+		if (currentOrder.getState().equals(StateOfOrderVO.STARTED)) {
 			currentOrder.setState(StateOfOrderVO.CONFIRMED);
-			startService();
+			try {
+				startService();
+			} catch (Exception e) {
+				System.err.println("Internal error by processing an order: ");
+				System.err.println(e.getMessage());
+			}
+			
 		} else {
-			System.out.println("Your order can not be confirmed.");
+			throw new IllegalStateException("Your order can not be confirmed.");
 		}
 
 	}
 
-	public void startService() {
-		if (currentOrder == null) {
-			System.out.println("Error: There is no order.");
+	public void startService() throws NoOrderException, NoCustomerException, IllegalStateException {
+		Objects.requireNonNull(currentOrder, " There is no order.");
+
+		if (currentOrder.getState().equals(StateOfOrderVO.STARTED)) {
+			throw new IllegalStateException("Your order can not be processed.");
 		}
 
-		if (currentOrder != null && currentOrder.getState().equals(StateOfOrderVO.STARTED)) {
-			System.out.println("Your order can not be processed.");
-		}
-
-		if (currentOrder != null && currentOrder.getState().equals(StateOfOrderVO.CONFIRMED)) {
+		if (currentOrder.getState().equals(StateOfOrderVO.CONFIRMED)) {
 			String s = kitchen.startService(currentOrder);
 			System.out.println(s);
 		}
 
-		if (currentOrder != null && currentOrder.getState().equals(StateOfOrderVO.READY)) {
+		if (currentOrder.getState().equals(StateOfOrderVO.READY)) {
 			String s = delivery.startService(currentOrder);
 			System.out.println(s);
 		}
 
-		if (currentOrder != null && currentOrder.getState().equals(StateOfOrderVO.DELIVERED)) {
+		if (currentOrder.getState().equals(StateOfOrderVO.DELIVERED)) {
 			currentOrder.setTimestampDeliveredOrder(LocalDateTime.now());
 			currentOrder.setState(StateOfOrderVO.FINISHED);
 			System.out.println("\nOrder completed: " + currentOrder.toString());
@@ -144,7 +155,8 @@ public class Ordering implements IOrdering {
 	/**
 	 * @param currentOrder the currentOrder to set
 	 */
-	public void setCurrentOrder(OrderVO currentOrder) {
+	public void setCurrentOrder(OrderVO currentOrder) throws NullPointerException {
+		Objects.requireNonNull(currentOrder, "currentOrder must not be null");
 		this.currentOrder = currentOrder;
 	}
 
@@ -157,8 +169,10 @@ public class Ordering implements IOrdering {
 
 	/**
 	 * @param currentCustomer the currentCustomer to set
+	 * @throws NullPointerException
 	 */
-	public void setCurrentCustomer(CustomerVO currentCusomer) {
+	public void setCurrentCustomer(CustomerVO currentCusomer) throws NullPointerException {
+		Objects.requireNonNull(currentCusomer, "currentCusomer must not be null");
 		this.currentCustomer = currentCusomer;
 	}
 
@@ -179,7 +193,8 @@ public class Ordering implements IOrdering {
 	/**
 	 * @param kitchen the kitchen to set
 	 */
-	public void setKitchen(IService kitchen) {
+	public void setKitchen(IService kitchen) throws NullPointerException {
+		Objects.requireNonNull(kitchen, "kitchen must not be null");
 		this.kitchen = kitchen;
 	}
 
@@ -193,7 +208,8 @@ public class Ordering implements IOrdering {
 	/**
 	 * @param delivery the delivery to set
 	 */
-	public void setDelivery(IService delivery) {
+	public void setDelivery(IService delivery) throws NullPointerException {
+		Objects.requireNonNull(delivery, "delivery must not be null");
 		this.delivery = delivery;
 	}
 
@@ -205,14 +221,20 @@ public class Ordering implements IOrdering {
 	}
 
 	@Override
-	public List<DishVO> sortShoppingBasket() {
+	public List<DishVO> sortShoppingBasket() throws NoOrderException {
+		if (this.currentOrder == null) {
+			throw new NoOrderException("There is no order.");
+		}
 		Collections.sort(this.currentOrder.getShoppingBasket());
 		return this.currentOrder.getShoppingBasket();
 	}
 
 	@Override
-	public List<DishVO> sortShoppingBasketByNumber() {
-		Comparator<DishVO> c = new Comparator<DishVO> () {
+	public List<DishVO> sortShoppingBasketByNumber() throws NoOrderException {
+		if (this.currentOrder == null) {
+			throw new NoOrderException("There is no order.");
+		}
+		Comparator<DishVO> c = new Comparator<DishVO>() {
 			public int compare(DishVO o1, DishVO o2) {
 				Integer a = o1.getNumberOfDish();
 				Integer b = o2.getNumberOfDish();
@@ -224,10 +246,12 @@ public class Ordering implements IOrdering {
 	}
 
 	@Override
-	public List<DishVO> sortShoppingBasketByPrice() {
+	public List<DishVO> sortShoppingBasketByPrice() throws NoOrderException {
+		if (this.currentOrder == null) {
+			throw new NoOrderException("There is no order.");
+		}
 		Collections.sort(this.currentOrder.getShoppingBasket(), Comparator.comparing(e -> e.getPrice()));
 		return this.currentOrder.getShoppingBasket();
 	}
-
 
 }

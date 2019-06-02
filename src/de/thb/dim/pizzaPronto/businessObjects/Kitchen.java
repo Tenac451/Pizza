@@ -1,5 +1,7 @@
 package de.thb.dim.pizzaPronto.businessObjects;
 
+import java.util.Objects;
+
 import de.thb.dim.pizzaPronto.valueObjects.ChefVO;
 import de.thb.dim.pizzaPronto.valueObjects.EmployeeVO;
 import de.thb.dim.pizzaPronto.valueObjects.OrderVO;
@@ -11,23 +13,30 @@ public class Kitchen implements IService {
 
 	public Kitchen() {
 		employees = new EmployeeVO[1];
-		// Koch erstellen
 		employees[0] = new ChefVO("Koch5Sterne", "Bocuse", "Bruno");
 	}
 
 	@Override
 	public String startService(OrderVO order) {
+		
+	
+		
 		String s = String.format("\nService of ChefVO %s: No order available.", employees[0].getPersonnelNo());
 
 		if (order == null) {
-			s = String.format("\nService of ChefVO %s: No order available.", employees[0].getPersonnelNo());
+			//throw new NoOrderException("No order available.");
+			//System.err.println("No order available.");
+			//s = String.format("\nService of ChefVO %s: No order available.", employees[0].getPersonnelNo());
+			Objects.requireNonNull(order, "No order available.");
 		} else {
 			if (order.getState().equals(StateOfOrderVO.CONFIRMED)) {
 				order.setState(StateOfOrderVO.READY);
 				s = String.format("\nService of ChefVO %s: Order is ready.", employees[0].getPersonnelNo());
 			} else {
-				s = String.format("\nService of ChefVO %s: No order for processing available.",
-						employees[0].getPersonnelNo());
+				throw new IllegalStateException("No order for processing available.");
+				//System.err.println("No order for processing available.");
+				//s = String.format("\nService of ChefVO %s: No order for processing available.",
+				//		employees[0].getPersonnelNo());
 			}
 		}
 		return s;

@@ -3,7 +3,7 @@ import java.text.DecimalFormat;
 import java.util.Arrays;
 
 
-public abstract class DishVO implements Comparable<DishVO>{
+public abstract class DishVO implements Comparable<DishVO>, Cloneable{
 	protected int number;
 	protected String name;
 	protected String[] ingredients;
@@ -32,7 +32,13 @@ public abstract class DishVO implements Comparable<DishVO>{
 	 * 
 	 */
 	public Object clone() throws CloneNotSupportedException {
-		return super.clone();
+		Object other = null;
+		try {
+			other = super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new InternalError();
+		}
+		return other;
 	}
 
 	
