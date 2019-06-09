@@ -66,10 +66,10 @@ public class PizzaVO extends DishVO{
 		}
 		
 		/**
-		 * see exercise later
+		 * 10.1
 		 * 
 		 */
-		public Object clone() throws CloneNotSupportedException {
+		public Object clone() throws InternalError {
 			return super.clone();
 		}
 

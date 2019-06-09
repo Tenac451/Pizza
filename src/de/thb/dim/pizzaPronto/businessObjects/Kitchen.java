@@ -19,26 +19,15 @@ public class Kitchen implements IService {
 	@Override
 	public String startService(OrderVO order) {
 		
-	
-		
 		String s = String.format("\nService of ChefVO %s: No order available.", employees[0].getPersonnelNo());
+		Objects.requireNonNull(order, "No order available.");
+		
+		if (order.getState().equals(StateOfOrderVO.CONFIRMED)) 
+			throw new IllegalStateException("No order for processing available.");	
+		
+		order.setState(StateOfOrderVO.READY);
+		s = String.format("\nService of ChefVO %s: Order is ready.", employees[0].getPersonnelNo());
 
-		if (order == null) {
-			//throw new NoOrderException("No order available.");
-			//System.err.println("No order available.");
-			//s = String.format("\nService of ChefVO %s: No order available.", employees[0].getPersonnelNo());
-			Objects.requireNonNull(order, "No order available.");
-		} else {
-			if (order.getState().equals(StateOfOrderVO.CONFIRMED)) {
-				order.setState(StateOfOrderVO.READY);
-				s = String.format("\nService of ChefVO %s: Order is ready.", employees[0].getPersonnelNo());
-			} else {
-				throw new IllegalStateException("No order for processing available.");
-				//System.err.println("No order for processing available.");
-				//s = String.format("\nService of ChefVO %s: No order for processing available.",
-				//		employees[0].getPersonnelNo());
-			}
-		}
 		return s;
 	}
 

@@ -177,7 +177,7 @@ public class Ordering implements IOrdering {
 	}
 
 	/**
-	 * @return the meno
+	 * @return the menu
 	 */
 	public static MenuVO getMenu() {
 		return menu;

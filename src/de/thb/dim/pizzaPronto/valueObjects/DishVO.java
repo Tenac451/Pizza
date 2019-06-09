@@ -31,7 +31,7 @@ public abstract class DishVO implements Comparable<DishVO>, Cloneable{
 	 * see exercise later
 	 * 
 	 */
-	public Object clone() throws CloneNotSupportedException {
+	public Object clone() throws InternalError {
 		Object other = null;
 		try {
 			other = super.clone();

@@ -66,7 +66,6 @@ public class CustomerVO  extends PersonVO{
 	 */
 	public CustomerVO(String lastName, String firstName, LocalDate dob) throws NullPointerException, CustomerTooYoungException, CustomerNoDateOfBirthException {
 		this(lastName, firstName, null, 0, null, dob);
-
 	}
 	
 
@@ -82,12 +81,12 @@ public class CustomerVO  extends PersonVO{
 		Period age;
 		LocalDate today = LocalDate.now();
 		
-		if (dateOfBirth != null) {
-			age = Period.between(dateOfBirth, today);
-			alter = (short) age.getYears();
-		} else {
+		if (dateOfBirth == null) 
 			throw new CustomerNoDateOfBirthException("Internal error: No date of birth.");
-		}
+
+		age = Period.between(dateOfBirth, today);
+		alter = (short) age.getYears();
+
 		return alter;
 	}
 	
@@ -162,9 +161,9 @@ public class CustomerVO  extends PersonVO{
 	 *  
 	 */
 	private String dobToString() throws CustomerNoDateOfBirthException {
-		if(dateOfBirth == null) {
+		if(dateOfBirth == null) 
 			throw new CustomerNoDateOfBirthException("Internal error: No date of birth.");
-		}
+		
 		return dateOfBirth.format(DateTimeFormatter.ofPattern("dd.MMM.yyyy"));
 	}
 //	
@@ -207,7 +206,7 @@ public class CustomerVO  extends PersonVO{
 		this.dateOfBirth = dob;
 		if (this.calculateAge() < 18)
 			throw new CustomerTooYoungException("Customer is not an adult. ");
-		}
+	}
 	
 	public OrderVO getOrder() {
 		return order;

@@ -47,7 +47,7 @@ public class DessertVO extends DishVO {
 	 * see exercise later
 	 * 
 	 */
-	public Object clone() throws CloneNotSupportedException {
+	public Object clone() throws InternalError {
 		return super.clone();
 	}
 

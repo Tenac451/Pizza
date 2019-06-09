@@ -29,40 +29,26 @@ public class Delivery implements IService {
 		String s = "";
 		CustomerVO currentCustomer;
 		EmployeeVO employee = selectEmployee();
-
-		if (order == null) {
-			// System.err.println("No order available.");
-			// s = String.format("\nService of DeliveryManVO %s: No order available.",
-			// employee.getPersonnelNo());
-			Objects.requireNonNull(order, "No order available.");
-		} else {
-
+		
+		Objects.requireNonNull(order, "No order available.");
+		
 			currentCustomer = order.getCustomer();
-
-			if (currentCustomer == null) {
+			
+			if (currentCustomer == null) 
 				throw new NoCustomerException("No customer available.");
-//				s = String.format("\nService of DeliveryManVO %s: No customer available.",
-//						employee.getPersonnelNo());
-			} else {
-				if (order.getState().equals(StateOfOrderVO.READY)) {
+					
+			if (!order.getState().equals(StateOfOrderVO.READY)) 
+				throw new IllegalStateException(" No order is ready for processing.");
+				
+			order.setState(StateOfOrderVO.DELIVERED);
 
-					order.setState(StateOfOrderVO.DELIVERED);
-
-					s += String.format("\nDrive to customer  %s %s, in %s %s\n", currentCustomer.getLastName(),
-							currentCustomer.getFirstName(), currentCustomer.getStreet(),
-							currentCustomer.getHouseNumber());
-					s += String.format("\nService of DeliveryManVO %s: ", employee.getPersonnelNo());
-					s += String.format("Order is delivered on %1$tm/%1$td/%1$tY at %1$tH:%1$tM o'clock",
-							LocalDateTime.now());
-
-				} else {
-					throw new IllegalStateException(" No order is ready for processing.");
-//					System.err.println(" No order is ready for processing.");
-//					s = String.format("\nService of DeliveryManVO %s: No order is ready for processing.",
-//							employee.getPersonnelNo());
-				}
-			}
-		}
+			s += String.format("\nDrive to customer  %s %s, in %s %s\n", currentCustomer.getLastName(),
+					currentCustomer.getFirstName(), currentCustomer.getStreet(),
+					currentCustomer.getHouseNumber());
+			s += String.format("\nService of DeliveryManVO %s: ", employee.getPersonnelNo());
+			s += String.format("Order is delivered on %1$tm/%1$td/%1$tY at %1$tH:%1$tM o'clock",
+					LocalDateTime.now());
+			
 		return s;
 	}
 
