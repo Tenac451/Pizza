@@ -1,5 +1,7 @@
 package de.thb.dim.pizzaPronto.valueObjects;
 
+import java.io.Serializable;
+
 /**
  * PersonVO is teh superclass containing basic attributes
  * 
@@ -9,7 +11,11 @@ package de.thb.dim.pizzaPronto.valueObjects;
  *
  */
 
-abstract class PersonVO {
+abstract class PersonVO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2046410791062860526L;
 	protected String lastName;
 	protected String firstName;
 	protected String street;

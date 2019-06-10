@@ -1,9 +1,14 @@
 package de.thb.dim.pizzaPronto.valueObjects;
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 
 
-public abstract class DishVO implements Comparable<DishVO>, Cloneable{
+public abstract class DishVO implements Comparable<DishVO>, Cloneable, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5057202153685911106L;
 	protected int number;
 	protected String name;
 	protected String[] ingredients;

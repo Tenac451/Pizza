@@ -1,4 +1,5 @@
 package de.thb.dim.pizzaPronto.valueObjects;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
@@ -16,6 +17,7 @@ import de.thb.dim.pizzaPronto.valueObjects.exceptions.CustomerTooYoungException;
  */
 public class CustomerVO  extends PersonVO{
 	
+
 	private static int nextId = 0;
 	private int id;
 

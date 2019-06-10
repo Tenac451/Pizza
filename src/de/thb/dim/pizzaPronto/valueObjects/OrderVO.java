@@ -1,4 +1,5 @@
 package de.thb.dim.pizzaPronto.valueObjects;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,8 +14,13 @@ import java.util.List;
  */
 
 
-public class OrderVO {
+public class OrderVO implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5659749214801355825L;
+	
 	private int orderNo;
 	private StateOfOrderVO state;
 	private LocalDateTime  timestampStartedOrder;
