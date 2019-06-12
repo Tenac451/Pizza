@@ -106,12 +106,13 @@ public class Ordering implements IOrdering {
 		if (currentOrder.getState().equals(StateOfOrderVO.STARTED)) {
 			currentOrder.setState(StateOfOrderVO.CONFIRMED);
 			try {
+				// System.out.println(this.getCurrentOrder().getState());
 				startService();
 			} catch (Exception e) {
 				System.err.println("Internal error by processing an order: ");
 				System.err.println(e.getMessage());
 			}
-			
+
 		} else {
 			throw new IllegalStateException("Your order can not be confirmed.");
 		}
@@ -234,14 +235,20 @@ public class Ordering implements IOrdering {
 		if (this.currentOrder == null) {
 			throw new NoOrderException("There is no order.");
 		}
-		Comparator<DishVO> c = new Comparator<DishVO>() {
+//		Comparator<DishVO> c = new Comparator<DishVO>() {
+//			public int compare(DishVO o1, DishVO o2) {
+//				Integer a = o1.getNumberOfDish();
+//				Integer b = o2.getNumberOfDish();
+//				return a.compareTo(b);
+//			}
+//		};
+		Collections.sort(this.currentOrder.getShoppingBasket(), new Comparator<DishVO>() {
 			public int compare(DishVO o1, DishVO o2) {
 				Integer a = o1.getNumberOfDish();
 				Integer b = o2.getNumberOfDish();
 				return a.compareTo(b);
 			}
-		};
-		Collections.sort(this.currentOrder.getShoppingBasket(), c);
+		});
 		return this.currentOrder.getShoppingBasket();
 	}
 

@@ -22,7 +22,7 @@ public class Kitchen implements IService {
 		String s = String.format("\nService of ChefVO %s: No order available.", employees[0].getPersonnelNo());
 		Objects.requireNonNull(order, "No order available.");
 		
-		if (order.getState().equals(StateOfOrderVO.CONFIRMED)) 
+		if (!order.getState().equals(StateOfOrderVO.CONFIRMED)) 
 			throw new IllegalStateException("No order for processing available.");	
 		
 		order.setState(StateOfOrderVO.READY);

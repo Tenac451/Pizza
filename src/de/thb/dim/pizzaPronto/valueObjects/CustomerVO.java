@@ -103,23 +103,12 @@ public class CustomerVO  extends PersonVO{
 		else return false;
 	}
 	
-	
-	
-
-	// standards Method of Java
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
-		// if (!(obj instanceof KundeVO))
-		// return false;
-		// instanceof is unknown yet -> inheritance
-		// This is a weak check, sind obj would also be an instance of its superclasses
-		// which doesn't correspnds wit hthe contract of equals:
-		// if x.equals(y) [is true] then (x.hashCode() == y.hashCode()) is true too.
 
-		// better solution
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
