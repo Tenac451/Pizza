@@ -8,25 +8,21 @@ package de.thb.dim.pizzaPronto.valueObjects;
  */
 public class PastaVO extends DishVO {
 	private int typeOfPasta;
-	
-	
+
 	public PastaVO(int number, String name, String[] ingredients, float price, int pastaType) {
 		super(number, name, ingredients, price);
 		setTypeOfPasta(pastaType);
 	}
-	
+
 	/**
-	 * Defaultkonstruktor 
-	 * Ruft den Initialisierungskonstruktor auf, um Standardwerte f�r Instanzattribute zu setzen.
+	 * Defaultkonstruktor Ruft den Initialisierungskonstruktor auf, um Standardwerte
+	 * f�r Instanzattribute zu setzen.
 	 * 
 	 */
 	public PastaVO() {
 		this(0, null, null, 0.00f, 0);
 	}
-	
 
-	
-	
 	///
 	/// Getter und Setter
 	///
@@ -60,11 +56,6 @@ public class PastaVO extends DishVO {
 		return true;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "PastaVO [" + super.toString() + "\t typeOfPasta =" + typeOfPasta  + "]\n";
-//	}
-	
 	/**
 	 * see exercise later
 	 * 
@@ -76,23 +67,20 @@ public class PastaVO extends DishVO {
 	@Override
 	public String getNameOfDish() {
 		StringBuffer sb = new StringBuffer();
-		sb.append("Pasta ");
-		
-		switch(typeOfPasta) {
-			case 4 : 
-				sb.append(getName() + " - Spaghetti");
-				break;
-			case 5 : 
-				sb.append(getName() + " - Tortellini");
-				break;
-			case 6 : 
-				sb.append(getName() + " - Gnocchi");
-				break;
-			default : 
-				sb.append(getName());
-				break;
+		sb.append("Pasta " + getName());
+
+		switch (typeOfPasta) {
+		case 4:
+			sb.append(" - Spaghetti");
+			break;
+		case 5:
+			sb.append(" - Tortellini");
+			break;
+		case 6:
+			sb.append(" - Gnocchi");
+			break;
 		}
-		
+
 		return sb.toString();
 	}
 
@@ -100,7 +88,5 @@ public class PastaVO extends DishVO {
 	public int getNumberOfDish() {
 		return this.typeOfPasta * 100 + this.number;
 	}
-		
-	
-	
-} 
+
+}

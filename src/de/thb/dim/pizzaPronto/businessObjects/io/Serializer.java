@@ -17,6 +17,7 @@ public class Serializer {
 	public Serializer(String datei) throws FileNotFoundException, NullPointerException {
 
 		try {
+//			os = new ObjectOutputStream(new FileOutputStream(datei, true));
 			os = new ObjectOutputStream(new FileOutputStream(datei));
 		}
 		/*

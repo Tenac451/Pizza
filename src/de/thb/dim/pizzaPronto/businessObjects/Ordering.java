@@ -19,7 +19,7 @@ import de.thb.dim.pizzaPronto.valueObjects.StateOfOrderVO;
  * @author schmidt
  *
  */
-public class Ordering implements IOrdering {
+public class Ordering implements de.thb.dim.pizzaPronto.businessObjects.IOrdering {
 
 	private static MenuVO menu;
 
@@ -235,19 +235,15 @@ public class Ordering implements IOrdering {
 		if (this.currentOrder == null) {
 			throw new NoOrderException("There is no order.");
 		}
-//		Comparator<DishVO> c = new Comparator<DishVO>() {
-//			public int compare(DishVO o1, DishVO o2) {
-//				Integer a = o1.getNumberOfDish();
-//				Integer b = o2.getNumberOfDish();
-//				return a.compareTo(b);
-//			}
-//		};
+
 		Collections.sort(this.currentOrder.getShoppingBasket(), new Comparator<DishVO>() {
+
 			public int compare(DishVO o1, DishVO o2) {
 				Integer a = o1.getNumberOfDish();
 				Integer b = o2.getNumberOfDish();
 				return a.compareTo(b);
 			}
+
 		});
 		return this.currentOrder.getShoppingBasket();
 	}
